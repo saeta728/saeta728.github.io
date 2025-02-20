@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avivanca Flights</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .hidden { display: none; }
+        .vuelo { border: 1px solid black; padding: 10px; margin: 5px; }
+        .despego { color: red; }
+    </style>
+</head>
+<body>
+    <div id="inicio">
+        <h1>Selecciona tu país</h1>
+        <input type="text" id="pais" placeholder="Escribe tu país">
+        <button onclick="iniciar()">Iniciar</button>
+    </div>
+
+    <div id="menu" class="hidden">
+        <h1>Vuelos disponibles</h1>
+        <h2>Saldo: <span id="saldo">100000</span> COP</h2>
+        <h2>Hora actual: <span id="hora-actual"></span>:00</h2>
+        <div id="vuelos"></div>
+    </div>
+
+    <script>
+        let saldo = 100000;
+        let horaActual = new Date().getHours();
+        document.getElementById("hora-actual").innerText = horaActual;
+
+        const generarVuelos = (origenes, destinos, horaInicio, horaFin, precio, cantidad) => {
+            return Array.from({ length: cantidad }, () => {
+                const origen = origenes[Math.floor(Math.random() * origenes.length)];
+                const destino = destinos[Math.floor(Math.random() * destinos.length)];
+                return { origen, destino, horaInicio, horaFin, precio };
+            });
+        };
+
+        const vuelos = [
+            ...generarVuelos(["Argentina", "Chile", "Brasil"], ["Colombia", "Perú", "Ecuador"], 1, 6, 50000, 30),
+            ...generarVuelos(["México", "EE.UU.", "Canadá"], ["Guatemala", "Panamá", "Costa Rica"], 6, 12, 100000, 30),
+            ...generarVuelos(["España", "Francia", "Italia"], ["Alemania", "Portugal", "Reino Unido"], 13, 17, 400000, 30),
+            ...generarVuelos(["Japón", "China", "India"], ["Australia", "Corea del Sur", "Filipinas"], 18, 23, 500000, 30),
+        ];
+
+        function iniciar() {
+            document.getElementById("inicio").classList.add("hidden");
+            document.getElementById("menu").classList.remove("hidden");
+            mostrarVuelos();
+        }
+
+        function obtenerHoraAleatoria(inicio, fin) {
+            return Math.floor(Math.random() * (fin - inicio + 1)) + inicio;
+        }
+
+        function mostrarVuelos() {
+            const contenedor = document.getElementById("vuelos");
+            contenedor.innerHTML = "";
+
+            vuelos.forEach((vuelo, index) => {
+                const horaSalida = obtenerHoraAleatoria(vuelo.horaInicio, vuelo.horaFin);
+                const yaDespego = horaActual > horaSalida;
+                const vueloDiv = document.createElement("div");
+                vueloDiv.className = "vuelo";
+                vueloDiv.innerHTML = `
+                    <h3>Vuelo: ${vuelo.origen} - ${vuelo.destino}</h3>
+                    <p>Hora de salida: ${horaSalida}:00 ${yaDespego ? '<span class="despego">Despegó</span>' : ''}</p>
+                    <p>Precio: ${vuelo.precio} COP</p>
+                    <button onclick="comprarVuelo(${index})">Comprar</button>
+                `;
+                contenedor.appendChild(vueloDiv);
+            });
+        }
+
+        function comprarVuelo(index) {
+            const vuelo = vuelos[index];
+            if (saldo >= vuelo.precio) {
+                saldo -= vuelo.precio;
+                document.getElementById("saldo").innerText = saldo;
+                alert("Pago exitoso");
+            } else {
+                alert("Error: saldo insuficiente");
+            }
+        }
+    </script>
+</body>
+</html>
