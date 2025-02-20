@@ -30,20 +30,37 @@
         let horaActual = new Date().getHours();
         document.getElementById("hora-actual").innerText = horaActual;
 
-        const generarVuelos = (origenes, destinos, horaInicio, horaFin, precio, cantidad) => {
-            return Array.from({ length: cantidad }, () => {
+        function generarVuelosAleatorios() {
+            const origenes = ["Argentina", "Chile", "Brasil", "México", "EE.UU.", "España", "Japón", "China"];
+            const destinos = ["Colombia", "Perú", "Ecuador", "Panamá", "Italia", "Alemania", "Australia", "Corea del Sur"];
+            let vuelosGenerados = [];
+            
+            for (let i = 0; i < 30; i++) {
                 const origen = origenes[Math.floor(Math.random() * origenes.length)];
                 const destino = destinos[Math.floor(Math.random() * destinos.length)];
-                return { origen, destino, horaInicio, horaFin, precio };
-            });
-        };
+                const horaInicio = Math.floor(Math.random() * 24); 
+                const horaFin = horaInicio + Math.floor(Math.random() * 3) + 1;
+                const precio = Math.floor(Math.random() * (500000 - 50000) + 50000);
+                vuelosGenerados.push({ origen, destino, horaInicio, horaFin, precio });
+            }
+            return vuelosGenerados;
+        }
 
-        const vuelos = [
-            ...generarVuelos(["Argentina", "Chile", "Brasil"], ["Colombia", "Perú", "Ecuador"], 1, 6, 50000, 30),
-            ...generarVuelos(["México", "EE.UU.", "Canadá"], ["Guatemala", "Panamá", "Costa Rica"], 6, 12, 100000, 30),
-            ...generarVuelos(["España", "Francia", "Italia"], ["Alemania", "Portugal", "Reino Unido"], 13, 17, 400000, 30),
-            ...generarVuelos(["Japón", "China", "India"], ["Australia", "Corea del Sur", "Filipinas"], 18, 23, 500000, 30),
-        ];
+        function guardarVuelos() {
+            const vuelosHoy = generarVuelosAleatorios();
+            localStorage.setItem("vuelos", JSON.stringify(vuelosHoy));
+            localStorage.setItem("fecha", new Date().toDateString());
+        }
+
+        function obtenerVuelosDelDia() {
+            const fechaGuardada = localStorage.getItem("fecha");
+            if (fechaGuardada !== new Date().toDateString()) {
+                guardarVuelos();
+            }
+            return JSON.parse(localStorage.getItem("vuelos")) || [];
+        }
+
+        let vuelos = obtenerVuelosDelDia();
 
         function iniciar() {
             document.getElementById("inicio").classList.add("hidden");
@@ -51,22 +68,16 @@
             mostrarVuelos();
         }
 
-        function obtenerHoraAleatoria(inicio, fin) {
-            return Math.floor(Math.random() * (fin - inicio + 1)) + inicio;
-        }
-
         function mostrarVuelos() {
             const contenedor = document.getElementById("vuelos");
             contenedor.innerHTML = "";
-
             vuelos.forEach((vuelo, index) => {
-                const horaSalida = obtenerHoraAleatoria(vuelo.horaInicio, vuelo.horaFin);
-                const yaDespego = horaActual > horaSalida;
+                const yaDespego = horaActual > vuelo.horaInicio;
                 const vueloDiv = document.createElement("div");
                 vueloDiv.className = "vuelo";
                 vueloDiv.innerHTML = `
                     <h3>Vuelo: ${vuelo.origen} - ${vuelo.destino}</h3>
-                    <p>Hora de salida: ${horaSalida}:00 ${yaDespego ? '<span class="despego">Despegó</span>' : ''}</p>
+                    <p>Hora de salida: ${vuelo.horaInicio}:00 ${yaDespego ? '<span class="despego">Despegó</span>' : ''}</p>
                     <p>Precio: ${vuelo.precio} COP</p>
                     <button onclick="comprarVuelo(${index})">Comprar</button>
                 `;
