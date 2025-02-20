@@ -26,9 +26,11 @@ export default function App() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [saldo, setSaldo] = useState(100000);
   const [horaActual, setHoraActual] = useState(new Date().getHours());
+  const [vueloSeleccionado, setVueloSeleccionado] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const intervalo = setInterval(() => {
       setHoraActual(new Date().getHours());
     }, 60000);
     return () => clearInterval(interval);
@@ -47,6 +49,14 @@ export default function App() {
     }
   };
 
+  const manejarVueloSeleccionado = (vuelo) => {
+    setCargando(true);
+    setTimeout(() => {
+      setVueloSeleccionado(vuelo);
+      setCargando(false);
+    }, 5000);
+  };
+
   return (
     <div className="App">
       {!menuVisible ? (
@@ -59,6 +69,21 @@ export default function App() {
             onChange={(e) => setPais(e.target.value)}
           />
           <button onClick={manejarSeleccion}>Iniciar</button>
+        </div>
+      ) : cargando ? (
+        <div>
+          <h1>Cargando...</h1>
+          <img src="/plane-loading.gif" alt="Avión volando" />
+        </div>
+      ) : vueloSeleccionado ? (
+        <div>
+          <h1>Ruta del vuelo</h1>
+          <p>{vueloSeleccionado.origen} - {vueloSeleccionado.destino}</p>
+          <MapContainer center={[0, 0]} zoom={2} style={{ height: "400px", width: "100%" }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Polyline positions={[[0, 0], [10, 10]]} color="blue" />
+          </MapContainer>
+          <button onClick={() => setVueloSeleccionado(null)}>Volver</button>
         </div>
       ) : (
         <div>
@@ -73,7 +98,9 @@ export default function App() {
                 <h3>Vuelo: {vuelo.origen} - {vuelo.destino}</h3>
                 <p>Hora de salida: {horaSalida}:00 {yaDespego && <span style={{ color: "red" }}>Despegó</span>}</p>
                 <p>Precio: {vuelo.precio} COP</p>
+                <img src="/plane.png" alt="Avión en pista" width="100" />
                 <button onClick={() => manejarCompra(vuelo)}>Comprar</button>
+                <button onClick={() => manejarVueloSeleccionado(vuelo)}>Ver Ruta</button>
               </div>
             );
           })}
