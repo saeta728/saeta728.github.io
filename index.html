@@ -1,95 +1,146 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avivanca Flights</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .hidden { display: none; }
-        .vuelo { border: 1px solid black; padding: 10px; margin: 5px; }
-        .despego { color: red; }
-    </style>
-</head>
-<body>
-    <div id="inicio">
-        <h1>Selecciona tu país</h1>
-        <input type="text" id="pais" placeholder="Escribe tu país">
-        <button onclick="iniciar()">Iniciar</button>
-    </div>
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
-    <div id="menu" class="hidden">
-        <h1>Vuelos disponibles</h1>
-        <h2>Saldo: <span id="saldo">100000</span> COP</h2>
-        <h2>Hora actual: <span id="hora-actual"></span></h2>
-        <div id="vuelos"></div>
-    </div>
-
-    <script>
-        let saldo = 100000;
-        let horaActual = new Date().getHours();
-        document.getElementById("hora-actual").innerText = convertirHora(horaActual);
-
-        const generarVuelos = (origenes, destinos, horaInicio, horaFin, precio, cantidad) => {
-            return Array.from({ length: cantidad }, () => {
-                const origen = origenes[Math.floor(Math.random() * origenes.length)];
-                const destino = destinos[Math.floor(Math.random() * destinos.length)];
-                return { origen, destino, horaInicio, horaFin, precio };
-            });
-        };
-
-        const vuelos = [
-            ...generarVuelos(["Argentina", "Chile", "Brasil"], ["Colombia", "Perú", "Ecuador"], 1, 6, 50000, 30),
-            ...generarVuelos(["México", "EE.UU.", "Canadá"], ["Guatemala", "Panamá", "Costa Rica"], 6, 12, 100000, 30),
-            ...generarVuelos(["España", "Francia", "Italia"], ["Alemania", "Portugal", "Reino Unido"], 13, 17, 400000, 30),
-            ...generarVuelos(["Japón", "China", "India"], ["Australia", "Corea del Sur", "Filipinas"], 18, 23, 500000, 30),
-        ];
-
-        function iniciar() {
-            document.getElementById("inicio").classList.add("hidden");
-            document.getElementById("menu").classList.remove("hidden");
-            mostrarVuelos();
+public class TankGame : MonoBehaviour
+{
+    public GameObject playerTank;
+    public Material usaTankMaterial;
+    public Material germanyTankMaterial;
+    public Light sceneLighting;
+    public ParticleSystem explosionEffect;
+    public ParticleSystem dustEffect;
+    public GameObject reticle;
+    public Color reticleGlowColor;
+    public AudioSource rainSound;
+    public Terrain gameMap;
+    public Text usaPlayerList;
+    public Text germanyPlayerList;
+    public GameObject mapPreview;
+    public GameObject winScreen;
+    public GameObject loseScreen;
+    public GameObject playButton;
+    public float countdownTime = 60.0f;
+    private int usaPlayers = 0;
+    private int germanyPlayers = 0;
+    private int maxPlayersPerTeam = 30;
+    private float health = 100;
+    private float moveSpeed = 5f;
+    private float rotationSpeed = 100f;
+    public GameObject projectile;
+    public Transform firePoint;
+    public AudioSource fireSound;
+    
+    void Start()
+    {
+        playButton.SetActive(true);
+        winScreen.SetActive(false);
+        loseScreen.SetActive(false);
+    }
+    
+    public void StartGame()
+    {
+        playButton.SetActive(false);
+        StartCoroutine(WaitForPlayers());
+        rainSound.Play();
+    }
+    
+    IEnumerator WaitForPlayers()
+    {
+        float timer = countdownTime;
+        while (timer > 0)
+        {
+            usaPlayerList.text = "USA Players: " + usaPlayers + "/30";
+            germanyPlayerList.text = "Germany Players: " + germanyPlayers + "/30";
+            timer -= Time.deltaTime;
+            yield return null;
         }
-
-        function obtenerHoraAleatoria(inicio, fin) {
-            return Math.floor(Math.random() * (fin - inicio + 1)) + inicio;
+        AssignBotsIfNeeded();
+    }
+    
+    void AssignBotsIfNeeded()
+    {
+        if (usaPlayers < maxPlayersPerTeam)
+        {
+            usaPlayers += maxPlayersPerTeam - usaPlayers;
         }
-
-        function convertirHora(hora) {
-            let periodo = hora >= 12 ? "PM" : "AM";
-            let hora12 = hora % 12 || 12; 
-            return `${hora12}:00 ${periodo}`;
+        
+        if (germanyPlayers < maxPlayersPerTeam)
+        {
+            germanyPlayers += maxPlayersPerTeam - germanyPlayers;
         }
-
-        function mostrarVuelos() {
-            const contenedor = document.getElementById("vuelos");
-            contenedor.innerHTML = "";
-
-            vuelos.forEach((vuelo, index) => {
-                const horaSalida = obtenerHoraAleatoria(vuelo.horaInicio, vuelo.horaFin);
-                const yaDespego = horaActual > horaSalida;
-                const vueloDiv = document.createElement("div");
-                vueloDiv.className = "vuelo";
-                vueloDiv.innerHTML = `
-                    <h3>Vuelo: ${vuelo.origen} - ${vuelo.destino}</h3>
-                    <p>Hora de salida: ${convertirHora(horaSalida)} ${yaDespego ? '<span class="despego">Despegó</span>' : ''}</p>
-                    <p>Precio: ${vuelo.precio} COP</p>
-                    <button onclick="comprarVuelo(${index})">Comprar</button>
-                `;
-                contenedor.appendChild(vueloDiv);
-            });
+    }
+    
+    void Update()
+    {
+        MoveTank();
+        RotateTurret();
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
+        {
+            Fire();
         }
-
-        function comprarVuelo(index) {
-            const vuelo = vuelos[index];
-            if (saldo >= vuelo.precio) {
-                saldo -= vuelo.precio;
-                document.getElementById("saldo").innerText = saldo;
-                alert("Pago exitoso");
-            } else {
-                alert("Error: saldo insuficiente");
+    }
+    
+    void MoveTank()
+    {
+        float move = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        float rotate = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        playerTank.transform.Translate(0, 0, move);
+        playerTank.transform.Rotate(0, rotate, 0);
+    }
+    
+    void RotateTurret()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            playerTank.transform.LookAt(new Vector3(hit.point.x, playerTank.transform.position.y, hit.point.z));
+        }
+    }
+    
+    void Fire()
+    {
+        GameObject shot = Instantiate(projectile, firePoint.position, firePoint.rotation);
+        shot.GetComponent<Rigidbody>().velocity = firePoint.forward * 50f;
+        fireSound.Play();
+    }
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            health -= 30;
+            if (health <= 0)
+            {
+                Explode();
             }
         }
-    </script>
-</body>
-</html>
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            dustEffect.Play();
+        }
+    }
+    
+    void Explode()
+    {
+        explosionEffect.transform.position = playerTank.transform.position;
+        explosionEffect.Play();
+        Destroy(playerTank);
+        CheckGameOver();
+    }
+    
+    void CheckGameOver()
+    {
+        if (usaPlayers == 0 || germanyPlayers == 0)
+        {
+            if (usaPlayers > 0)
+            {
+                winScreen.SetActive(true);
+            }
+            else
+            {
+                loseScreen.SetActive(true);
+            }
+        }
+    }
+}
