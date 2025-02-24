@@ -1,59 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batalla de Tanques 3D</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <title>Tank Battle Game</title>
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-        .ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 20px; }
-        .button { padding: 10px; background: blue; color: white; border: none; cursor: pointer; }
+        body { margin: 0; overflow: hidden; text-align: center; background-color: #333; color: white; }
+        #gameCanvas { display: block; margin: auto; background: url('forest_background.jpg') no-repeat center center/cover; }
+        #ui { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); }
+        button { padding: 10px 20px; font-size: 18px; margin: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="ui">
-        <button class="button" onclick="startGame()">Jugar</button>
+    <div id="ui">
+        <button id="playButton">Play</button>
+        <span id="teamSelection">Select Team: <button id="usaTeam">USA</button> <button id="germanyTeam">Germany</button></span>
+        <div id="status"></div>
     </div>
-    <script>
-        let scene, camera, renderer, controls;
-        let tank;
-
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-            
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            
-            let light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(10, 10, 10);
-            scene.add(light);
-
-            let geometry = new THREE.BoxGeometry(2, 1, 3);
-            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            tank = new THREE.Mesh(geometry, material);
-            scene.add(tank);
-
-            camera.position.z = 5;
-            animate();
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-
-        function startGame() {
-            console.log("Juego iniciado");
-        }
-
-        init();
-    </script>
+    <canvas id="gameCanvas"></canvas>
+    <script src="game.js"></script>
 </body>
 </html>
-
