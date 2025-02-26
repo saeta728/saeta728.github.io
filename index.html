@@ -12,6 +12,7 @@
 <body>
     <script type="module">
         import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js';
 
         // Configuración de la escena
         const scene = new THREE.Scene();
@@ -39,6 +40,15 @@
         const terrain = new THREE.Mesh(geometry, material);
         terrain.rotation.x = -Math.PI / 2;
         scene.add(terrain);
+
+        // Cargar modelo de soldado
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load('https://threejs.org/examples/models/gltf/Soldier.glb', (gltf) => {
+            const soldier = gltf.scene;
+            soldier.scale.set(5, 5, 5);
+            soldier.position.set(0, 0, 0);
+            scene.add(soldier);
+        });
 
         // Cámara
         camera.position.set(0, 50, 100);
