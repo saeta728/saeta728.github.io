@@ -3,21 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tank Battle Game</title>
+    <title>Tank Battle 3D</title>
     <style>
-        body { margin: 0; overflow: hidden; text-align: center; background-color: #333; color: white; }
-        #gameCanvas { display: block; margin: auto; background: url('forest_background.jpg') no-repeat center center/cover; }
-        #ui { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); }
-        button { padding: 10px 20px; font-size: 18px; margin: 5px; cursor: pointer; }
+        body { margin: 0; overflow: hidden; text-align: center; }
+        canvas { display: block; }
+        #ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 18px; }
+        #startScreen, #winScreen, #loseScreen { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: rgba(0, 0, 0, 0.7); 
+            color: white; padding: 20px; 
+            display: none; 
+        }
+        button { padding: 10px 20px; font-size: 18px; }
     </style>
 </head>
 <body>
     <div id="ui">
-        <button id="playButton">Play</button>
-        <span id="teamSelection">Select Team: <button id="usaTeam">USA</button> <button id="germanyTeam">Germany</button></span>
-        <div id="status"></div>
+        <p id="countdown">Waiting for players: 60s</p>
     </div>
-    <canvas id="gameCanvas"></canvas>
-    <script src="game.js"></script>
+    <div id="startScreen">
+        <h1>Tank Battle 3D</h1>
+        <button onclick="startGame()">Play</button>
+    </div>
+    <div id="winScreen"><h1>You Win!</h1></div>
+    <div id="loseScreen"><h1>You Lose!</h1></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer, playerTank, tanks = [], countdown = 60, gameStarted = false;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            const light = new THREE.AmbientLight(0x404040);
+            scene.add(light);
+            
+            const ground = new THREE.Mesh(
+                new THREE.PlaneGeometry(200, 200),
+                new THREE.MeshBasicMaterial({ color: 0x228B22 })
+            );
+            ground.rotation.x = -Math.PI / 2;
+            scene.add(ground);
+
+            playerTank = new THREE.Mesh(
+                new THREE.BoxGeometry(2, 1, 3),
+                new THREE.MeshBasicMaterial({ color: 0x008000 })
+            );
+            playerTank.position.y = 0.5;
+            scene.add(playerTank);
+            camera.position.set(0, 5, 10);
+            camera.lookAt(playerTank.position);
+
+            for (let i = 0; i < 30; i++) {
+                let enemyTank = new THREE.Mesh(
+                    new THREE.BoxGeometry(2, 1, 3),
+                    new THREE.MeshBasicMaterial({ color: 0x555555 })
+                );
+                enemyTank.position.set(Math.random() * 100 - 50, 0.5, Math.random() * 100 - 50);
+                scene.add(enemyTank);
+                tanks.push(enemyTank);
+            }
+
+            animate();
+            setInterval(updateCountdown, 1000);
+        }
+
+        function updateCountdown() {
+            if (countdown > 0 && !gameStarted) {
+                countdown--;
+                document.getElementById('countdown').innerText = `Waiting for players: ${countdown}s`;
+                if (countdown === 0) startMatch();
+            }
+        }
+
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+        }
+
+        function startMatch() {
+            gameStarted = true;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
+
