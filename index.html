@@ -3,64 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batalla de Tanques</title>
+    <title>Juego de Guerra</title>
     <style>
-        body { margin: 0; overflow: hidden; background-color: #000; }
+        body { margin: 0; overflow: hidden; }
         canvas { display: block; }
-        #ui {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 20px;
-        }
-        #playButton {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 10px 20px;
-            font-size: 24px;
-            cursor: pointer;
-            background-color: green;
-            color: white;
-            border: none;
-            display: block;
-        }
     </style>
 </head>
 <body>
-    <div id="ui">Batalla de Tanques</div>
-    <button id="playButton">Jugar</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        let scene, camera, renderer, tank;
-        
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-            
-            let geometry = new THREE.BoxGeometry(2, 1, 3);
-            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            tank = new THREE.Mesh(geometry, material);
-            scene.add(tank);
-            
-            camera.position.z = 10;
-        }
-        
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+
+        // Configuración de la escena
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Luz ambiental
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
+
+        // Terreno básico
+        const geometry = new THREE.PlaneGeometry(500, 500, 50, 50);
+        const material = new THREE.MeshStandardMaterial({ color: 0x228B22, wireframe: true });
+        const terrain = new THREE.Mesh(geometry, material);
+        terrain.rotation.x = -Math.PI / 2;
+        scene.add(terrain);
+
+        // Cámara
+        camera.position.set(0, 50, 100);
+        camera.lookAt(0, 0, 0);
+
+        // Animación
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
-        
-        document.getElementById("playButton").addEventListener("click", function() {
-            this.style.display = "none";
-            init();
-            animate();
+        animate();
+
+        // Ajuste de tamaño de la ventana
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
         });
     </script>
 </body>
