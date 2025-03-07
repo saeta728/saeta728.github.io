@@ -1,72 +1,50 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Guerra</title>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-    </style>
-</head>
-<body>
-    <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
-        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js';
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-        // Configuración de la escena
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+@SpringBootApplication
+public class TrailerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TrailerApplication.class, args);
+    }
+}
 
-        // Luz ambiental y direccional
-        const light = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(light);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(50, 100, 50);
-        scene.add(directionalLight);
+@Controller
+class TrailerController {
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("title", "InfoArmados - Tráiler");
+        model.addAttribute("animationScript", "/static/script.js");
+        model.addAttribute("music", "/static/war_music.mp3");
+        model.addAttribute("subscribeButton", "Suscribirse");
+        return "index";
+    }
+}
 
-        // Cargar textura para el terreno
-        const loader = new THREE.TextureLoader();
-        const terrainTexture = loader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg');
-        terrainTexture.wrapS = terrainTexture.wrapT = THREE.RepeatWrapping;
-        terrainTexture.repeat.set(10, 10);
-
-        // Terreno con textura
-        const geometry = new THREE.PlaneGeometry(500, 500, 50, 50);
-        const material = new THREE.MeshStandardMaterial({ map: terrainTexture });
-        const terrain = new THREE.Mesh(geometry, material);
-        terrain.rotation.x = -Math.PI / 2;
-        scene.add(terrain);
-
-        // Cargar modelo de soldado
-        const gltfLoader = new GLTFLoader();
-        gltfLoader.load('https://threejs.org/examples/models/gltf/Soldier.glb', (gltf) => {
-            const soldier = gltf.scene;
-            soldier.scale.set(5, 5, 5);
-            soldier.position.set(0, 0, 0);
-            scene.add(soldier);
-        });
-
-        // Cámara
-        camera.position.set(0, 50, 100);
-        camera.lookAt(0, 0, 0);
-
-        // Animación
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Ajuste de tamaño de la ventana
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
-    </script>
-</body>
-</html>
+// HTML
+@Controller
+class HtmlController {
+    @GetMapping("/static/index.html")
+    public String getHtmlPage() {
+        return "<html>\n" +
+               "<head>\n" +
+               "<title>InfoArmados - Tráiler</title>\n" +
+               "<link rel='stylesheet' href='/static/style.css'>\n" +
+               "</head>\n" +
+               "<body>\n" +
+               "<audio autoplay loop>\n" +
+               "  <source src='/static/war_music.mp3' type='audio/mpeg'>\n" +
+               "</audio>\n" +
+               "<div id='animation-container'>\n" +
+               "  <div class='tank'></div>\n" +
+               "  <div class='plane'></div>\n" +
+               "  <div class='ship'></div>\n" +
+               "</div>\n" +
+               "<button id='subscribe-button'>Suscribirse</button>\n" +
+               "<script src='/static/script.js'></script>\n" +
+               "</body>\n" +
+               "</html>";
+    }
+}
