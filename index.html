@@ -1,50 +1,105 @@
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario de Reproducción</title>
+</head>
+<body>
+    <h1>Reproducción Automática de Videos</h1>
+    <div id="video-container">
+        <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <script>
+        function getVideoUrl() {
+            const now = new Date();
+            const hour = now.getHours();
+            
+            if (hour >= 1 && hour < 5) {
+                return "https://www.youtube.com/embed/sslrepbO5M8";
+            } else if (hour >= 5 && hour < 9) {
+                const funkyAlexZurdo = [
+                    "https://www.youtube.com/embed/tF8R3J5yxXc",
+                    "https://www.youtube.com/embed/ze6aQY8Djvg",
+                    "https://www.youtube.com/embed/L7KR6_Ywshc",
+                    "https://www.youtube.com/embed/mS1uElTYS-Y",
+                    "https://www.youtube.com/embed/V2HrK4267vw",
+                    "https://www.youtube.com/embed/F_Z8LLQ2Qao",
+                    "https://www.youtube.com/embed/PsDghdJperY",
+                    "https://www.youtube.com/embed/b9AHzHHMfwY"
+                ];
+                return funkyAlexZurdo[Math.floor(Math.random() * funkyAlexZurdo.length)];
+            } else if (hour >= 10 && hour < 13) {
+                const predicas = [
+                    "https://www.youtube.com/embed/JAckc8DJzSw",
+                    "https://www.youtube.com/embed/D-egXAWxkgM",
+                    "https://www.youtube.com/embed/TORbIOR9XnE",
+                    "https://www.youtube.com/embed/ehrnPJsf3Cc",
+                    "https://www.youtube.com/embed/LFOTURa-E7U",
+                    "https://www.youtube.com/embed/GWahZQ8VV0g",
+                    "https://www.youtube.com/embed/fV8UgvbY6O4",
+                    "https://www.youtube.com/embed/lpoq97syx5U",
+                    "https://www.youtube.com/embed/9462rIsNZ04",
+                    "https://www.youtube.com/embed/8jlZU8VU1mk",
+                    "https://www.youtube.com/embed/dxzyz9JAMD4"
+                ];
+                return predicas[Math.floor(Math.random() * predicas.length)];
+            } else if (hour >= 14 && hour < 16) {
+                const redimidosKike = [
+                    "https://www.youtube.com/embed/ZNVrYuTBbMM",
+                    "https://www.youtube.com/embed/w-D9OdOb88U",
+                    "https://www.youtube.com/embed/80rOkf3oQAY",
+                    "https://www.youtube.com/embed/cvl_I8TcAsQ",
+                    "https://www.youtube.com/embed/SPo1wFuQ93Y",
+                    "https://www.youtube.com/embed/mTxOwaiu9UY",
+                    "https://www.youtube.com/embed/luVCFyytVTE",
+                    "https://www.youtube.com/embed/NJMWETuxVic"
+                ];
+                return redimidosKike[Math.floor(Math.random() * redimidosKike.length)];
+            } else if (hour >= 17 && hour < 18) {
+                const mundoCristiano = [
+                    "https://www.youtube.com/embed/3fOFvYLdTps",
+                    "https://www.youtube.com/embed/bYgJoYnx3no",
+                    "https://www.youtube.com/embed/JgtraFxbstE",
+                    "https://www.youtube.com/embed/2W5ARXydRu4",
+                    "https://www.youtube.com/embed/x4PS2hzfr3o",
+                    "https://www.youtube.com/embed/aeiD4710ymM",
+                    "https://www.youtube.com/embed/iigJUg-uGKQ",
+                    "https://www.youtube.com/embed/j0hKk6kUh_o",
+                    "https://www.youtube.com/embed/3567d1gyPCE",
+                    "https://www.youtube.com/embed/XWDCYdKNh-w",
+                    "https://www.youtube.com/embed/MsrGnbil7jY",
+                    "https://www.youtube.com/embed/qrQ1EhYO3V8"
+                ];
+                return mundoCristiano[Math.floor(Math.random() * mundoCristiano.length)];
+            } else if (hour >= 19 && hour < 20) {
+                return "https://www.youtube.com/embed/7xh4QR6DKJ4";
+            } else if (hour >= 21 && hour < 22) {
+                const cancionesAvivamiento = [
+                    "https://www.youtube.com/embed/ijEeywH2uDE",
+                    "https://www.youtube.com/embed/fL1WiLEvqqA",
+                    "https://www.youtube.com/embed/w0C0Pnx7hVQ",
+                    "https://www.youtube.com/embed/z6EtvMMjcTQ",
+                    "https://www.youtube.com/embed/yK213ukFGJI",
+                    "https://www.youtube.com/embed/A9hfWctXfyU",
+                    "https://www.youtube.com/embed/VwDBCyl8RjY"
+                ];
+                return cancionesAvivamiento[Math.floor(Math.random() * cancionesAvivamiento.length)];
+            } else if (hour >= 22 || hour < 1) {
+                const nochesConJesus = [
+                    "https://www.youtube.com/embed/HqK2nqtqRNg",
+                    "https://www.youtube.com/embed/9tHVmvt4Mik",
+                    "https://www.youtube.com/embed/iA9FlyCH8vc",
+                    "https://www.youtube.com/embed/9_PYUpwU5d8"
+                ];
+                return nochesConJesus[Math.floor(Math.random() * nochesConJesus.length)];
+            } else {
+                return "https://www.youtube.com/embed/sslrepbO5M8"; // Video por defecto
+            }
+        }
 
-@SpringBootApplication
-public class TrailerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(TrailerApplication.class, args);
-    }
-}
-
-@Controller
-class TrailerController {
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("title", "InfoArmados - Tráiler");
-        model.addAttribute("animationScript", "/static/script.js");
-        model.addAttribute("music", "/static/war_music.mp3");
-        model.addAttribute("subscribeButton", "Suscribirse");
-        return "index";
-    }
-}
-
-// HTML
-@Controller
-class HtmlController {
-    @GetMapping("/static/index.html")
-    public String getHtmlPage() {
-        return "<html>\n" +
-               "<head>\n" +
-               "<title>InfoArmados - Tráiler</title>\n" +
-               "<link rel='stylesheet' href='/static/style.css'>\n" +
-               "</head>\n" +
-               "<body>\n" +
-               "<audio autoplay loop>\n" +
-               "  <source src='/static/war_music.mp3' type='audio/mpeg'>\n" +
-               "</audio>\n" +
-               "<div id='animation-container'>\n" +
-               "  <div class='tank'></div>\n" +
-               "  <div class='plane'></div>\n" +
-               "  <div class='ship'></div>\n" +
-               "</div>\n" +
-               "<button id='subscribe-button'>Suscribirse</button>\n" +
-               "<script src='/static/script.js'></script>\n" +
-               "</body>\n" +
-               "</html>";
-    }
-}
+        document.getElementById("video-frame").src = getVideoUrl();
+    </script>
+</body>
+</html>
