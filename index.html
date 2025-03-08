@@ -12,91 +12,66 @@
     </div>
     
     <script>
-        const schedules = [
-            { start: 1, end: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8"] },
-            { start: 5, end: 9, videos: [
-                "https://www.youtube.com/embed/tF8R3J5yxXc",
-                "https://www.youtube.com/embed/ze6aQY8Djvg",
-                "https://www.youtube.com/embed/L7KR6_Ywshc",
-                "https://www.youtube.com/embed/mS1uElTYS-Y",
-                "https://www.youtube.com/embed/V2HrK4267vw",
-                "https://www.youtube.com/embed/F_Z8LLQ2Qao",
-                "https://www.youtube.com/embed/PsDghdJperY",
-                "https://www.youtube.com/embed/b9AHzHHMfwY"
+        const horarios = [
+            { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8"] },
+            { inicio: 5, fin: 9, videos: [
+                "https://www.youtube.com/embed/tF8R3J5yxXc", "https://www.youtube.com/embed/ze6aQY8Djvg", 
+                "https://www.youtube.com/embed/L7KR6_Ywshc", "https://www.youtube.com/embed/mS1uElTYS-Y", 
+                "https://www.youtube.com/embed/V2HrK4267vw", "https://www.youtube.com/embed/F_Z8LLQ2Qao", 
+                "https://www.youtube.com/embed/PsDghdJperY", "https://www.youtube.com/embed/b9AHzHHMfwY"
             ]},
-            { start: 10, end: 13, videos: [
-                "https://www.youtube.com/embed/JAckc8DJzSw",
-                "https://www.youtube.com/embed/D-egXAWxkgM",
-                "https://www.youtube.com/embed/TORbIOR9XnE",
-                "https://www.youtube.com/embed/ehrnPJsf3Cc",
-                "https://www.youtube.com/embed/LFOTURa-E7U",
-                "https://www.youtube.com/embed/GWahZQ8VV0g",
-                "https://www.youtube.com/embed/fV8UgvbY6O4",
-                "https://www.youtube.com/embed/lpoq97syx5U",
-                "https://www.youtube.com/embed/9462rIsNZ04",
-                "https://www.youtube.com/embed/8jlZU8VU1mk",
+            { inicio: 10, fin: 13, videos: [
+                "https://www.youtube.com/embed/JAckc8DJzSw", "https://www.youtube.com/embed/D-egXAWxkgM", 
+                "https://www.youtube.com/embed/TORbIOR9XnE", "https://www.youtube.com/embed/ehrnPJsf3Cc", 
+                "https://www.youtube.com/embed/LFOTURa-E7U", "https://www.youtube.com/embed/GWahZQ8VV0g", 
+                "https://www.youtube.com/embed/fV8UgvbY6O4", "https://www.youtube.com/embed/lpoq97syx5U", 
+                "https://www.youtube.com/embed/9462rIsNZ04", "https://www.youtube.com/embed/8jlZU8VU1mk", 
                 "https://www.youtube.com/embed/dxzyz9JAMD4"
             ]},
-            { start: 14, end: 16, videos: [
-                "https://www.youtube.com/embed/ZNVrYuTBbMM",
-                "https://www.youtube.com/embed/w-D9OdOb88U",
-                "https://www.youtube.com/embed/80rOkf3oQAY",
-                "https://www.youtube.com/embed/cvl_I8TcAsQ",
-                "https://www.youtube.com/embed/SPo1wFuQ93Y",
-                "https://www.youtube.com/embed/mTxOwaiu9UY",
-                "https://www.youtube.com/embed/luVCFyytVTE",
-                "https://www.youtube.com/embed/NJMWETuxVic"
+            { inicio: 14, fin: 16, videos: [
+                "https://www.youtube.com/embed/ZNVrYuTBbMM", "https://www.youtube.com/embed/w-D9OdOb88U", 
+                "https://www.youtube.com/embed/80rOkf3oQAY", "https://www.youtube.com/embed/cvl_I8TcAsQ", 
+                "https://www.youtube.com/embed/SPo1wFuQ93Y", "https://www.youtube.com/embed/mTxOwaiu9UY", 
+                "https://www.youtube.com/embed/luVCFyytVTE", "https://www.youtube.com/embed/NJMWETuxVic"
             ]},
-            { start: 17, end: 18, videos: [
-                "https://www.youtube.com/embed/3fOFvYLdTps",
-                "https://www.youtube.com/embed/bYgJoYnx3no",
-                "https://www.youtube.com/embed/JgtraFxbstE",
-                "https://www.youtube.com/embed/2W5ARXydRu4",
-                "https://www.youtube.com/embed/x4PS2hzfr3o",
-                "https://www.youtube.com/embed/aeiD4710ymM",
-                "https://www.youtube.com/embed/iigJUg-uGKQ",
-                "https://www.youtube.com/embed/j0hKk6kUh_o",
-                "https://www.youtube.com/embed/3567d1gyPCE",
-                "https://www.youtube.com/embed/XWDCYdKNh-w",
-                "https://www.youtube.com/embed/MsrGnbil7jY",
-                "https://www.youtube.com/embed/qrQ1EhYO3V8"
+            { inicio: 17, fin: 18, videos: [
+                "https://www.youtube.com/embed/3fOFvYLdTps", "https://www.youtube.com/embed/bYgJoYnx3no", 
+                "https://www.youtube.com/embed/JgtraFxbstE", "https://www.youtube.com/embed/2W5ARXydRu4", 
+                "https://www.youtube.com/embed/x4PS2hzfr3o", "https://www.youtube.com/embed/aeiD4710ymM", 
+                "https://www.youtube.com/embed/iigJUg-uGKQ", "https://www.youtube.com/embed/j0hKk6kUh_o", 
+                "https://www.youtube.com/embed/3567d1gyPCE", "https://www.youtube.com/embed/XWDCYdKNh-w", 
+                "https://www.youtube.com/embed/MsrGnbil7jY", "https://www.youtube.com/embed/qrQ1EhYO3V8"
             ]},
-            { start: 19, end: 20, videos: ["https://www.youtube.com/embed/7xh4QR6DKJ4"] },
-            { start: 21, end: 22, videos: [
-                "https://www.youtube.com/embed/ijEeywH2uDE",
-                "https://www.youtube.com/embed/fL1WiLEvqqA",
-                "https://www.youtube.com/embed/w0C0Pnx7hVQ",
-                "https://www.youtube.com/embed/z6EtvMMjcTQ",
-                "https://www.youtube.com/embed/yK213ukFGJI",
-                "https://www.youtube.com/embed/A9hfWctXfyU",
+            { inicio: 19, fin: 20, videos: ["https://www.youtube.com/embed/7xh4QR6DKJ4"] },
+            { inicio: 21, fin: 22, videos: [
+                "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA", 
+                "https://www.youtube.com/embed/w0C0Pnx7hVQ", "https://www.youtube.com/embed/z6EtvMMjcTQ", 
+                "https://www.youtube.com/embed/yK213ukFGJI", "https://www.youtube.com/embed/A9hfWctXfyU", 
                 "https://www.youtube.com/embed/VwDBCyl8RjY"
             ]},
-            { start: 22, end: 24, videos: [
-                "https://www.youtube.com/embed/HqK2nqtqRNg",
-                "https://www.youtube.com/embed/9tHVmvt4Mik",
-                "https://www.youtube.com/embed/iA9FlyCH8vc",
-                "https://www.youtube.com/embed/9_PYUpwU5d8"
-            ]}
+            { inicio: 22, fin: 24, videos: [
+                "https://www.youtube.com/embed/HqK2nqtqRNg", "https://www.youtube.com/embed/9tHVmvt4Mik", 
+                "https://www.youtube.com/embed/iA9FlyCH8vc", "https://www.youtube.com/embed/9_PYUpwU5d8"
+            ]},
+            { inicio: 0, fin: 1, videos: ["https://www.youtube.com/embed/sslrepbO5M8"] }
         ];
-
+        
         function getVideoUrl() {
-            const hour = new Date().getHours();
-            const schedule = schedules.find(s => hour >= s.start && hour < s.end);
-            return schedule ? schedule.videos[Math.floor(Math.random() * schedule.videos.length)] : "https://www.youtube.com/embed/sslrepbO5M8";
+            const now = new Date();
+            const hour = now.getHours();
+            const horario = horarios.find(h => hour >= h.inicio && hour < h.fin);
+            if (horario) {
+                return horario.videos[Math.floor(Math.random() * horario.videos.length)];
+            }
+            return "https://www.youtube.com/embed/sslrepbO5M8"; 
         }
-
-        const iframe = document.getElementById("video-frame");
-
-        function loadVideo() {
-            iframe.src = getVideoUrl();
+        
+        function updateVideo() {
+            document.getElementById("video-frame").src = getVideoUrl();
         }
-
-        iframe.addEventListener("load", () => {
-            setTimeout(loadVideo, 1000 * 60 * 60); // Cambia el video cada hora según el horario
-        });
-
-        loadVideo();
+        
+        setInterval(updateVideo, 60000); // Revisa cada minuto
+        updateVideo();
     </script>
 </body>
 </html>
-
