@@ -63,9 +63,27 @@
             return videos.length > 0 ? videos[Math.floor(Math.random() * videos.length)] : "";
         }
     </script>
+    <style>
+        .bible-verse {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .video-container {
+            text-align: center;
+        }
+    </style>
 </head>
 <body onload="document.getElementById('videoFrame').src = getVideoURL();">
     <h1>Horario de Reproducción</h1>
-    <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    <div class="video-container">
+        <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+        <p>aviradio2</p>
+    </div>
+    <div class="bible-verse">Porque de tal manera amó Dios al mundo... (Juan 3:16)</div>
 </body>
 </html>
