@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviradio2 - Horario de Reproducción</title>
+    <title>Horario de Reproducción - Aviradio2</title>
     <script>
         function getVideoURL() {
             const now = new Date();
@@ -27,7 +27,7 @@
                     "https://www.youtube.com/embed/GWahZQ8VV0g", "https://www.youtube.com/embed/fV8UgvbY6O4",
                     "https://www.youtube.com/embed/lpoq97syx5U", "https://www.youtube.com/embed/9462rIsNZ04",
                     "https://www.youtube.com/embed/8jlZU8VU1mk", "https://www.youtube.com/embed/dxzyz9JAMD4",
-                    "https://www.youtube.com/embed/Yjs-5AWXv1w" 
+                    "https://www.youtube.com/embed/Yjs-5AWXv1w"  <!-- 🔹 Corregido aquí -->
                 ];
             } else if (hour >= 14 && hour < 17) {
                 videos = [
@@ -49,7 +49,7 @@
                 videos = [
                     "https://www.youtube.com/embed/JYGHIX7sZgI", "https://www.youtube.com/embed/7xh4QR6DKJ4",
                     "https://www.youtube.com/embed/9FIT5C12I0o", "https://www.youtube.com/embed/E3hyZlRKVy4"
-                ];
+                ]; <!-- 🔹 Eliminado duplicado -->
             } else if (hour >= 21 && hour < 22) {
                 videos = [
                     "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA",
@@ -64,16 +64,26 @@
                 ];
             }
 
+            // Si no hay videos disponibles, muestra un mensaje en lugar de un error
             return videos.length > 0 ? videos[Math.floor(Math.random() * videos.length)] : "";
         }
 
         function loadVideo() {
-            document.getElementById('videoFrame').src = getVideoURL();
+            const videoURL = getVideoURL();
+            if (videoURL) {
+                document.getElementById('videoFrame').src = videoURL;
+            } else {
+                document.getElementById('videoContainer').innerHTML = "<p>No hay videos disponibles en este momento.</p>";
+            }
         }
     </script>
 </head>
 <body onload="loadVideo()">
-    <h1>Aviradio2 - Horario de Reproducción</h1>
-    <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    <h1>Horario de Reproducción</h1>
+    <h1>Aviradio2</h1>
+    <div id="videoContainer">
+        <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
 </body>
 </html>
+
