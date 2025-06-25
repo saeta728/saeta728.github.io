@@ -187,17 +187,56 @@
         
 
          // Versículos
-            const versiculos = [
-                "“Todo lo puedo en Cristo que me fortalece.”\n– Filipenses 4:13",
-                "“Confía en el Señor con todo tu corazón.”\n– Proverbios 3:5",
-                "“El Señor es mi pastor; nada me faltará.”\n– Salmos 23:1",
-                "“Porque de tal manera amó Dios al mundo...”\n– Juan 3:16",
-                "“En el mundo tendréis aflicción; pero confiad...”\n– Juan 16:33",
-                "“No temas, porque yo estoy contigo.”\n– Isaías 41:10",
-                "“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39"
-            ];
+           const versiculosPorDia = [
+    // Domingo (0)
+    [
+        "“Este es el día que hizo el Señor; nos gozaremos y alegraremos en él.”\n– Salmos 118:24",
+        "“Alegraos en la esperanza; sufridos en la tribulación.”\n– Romanos 12:12",
+        "“Sed agradecidos en todo.”\n– 1 Tesalonicenses 5:18"
+    ],
+    // Lunes (1)
+    [
+        "“El Señor es mi pastor; nada me faltará.”\n– Salmos 23:1",
+        "“Clama a mí y yo te responderé.”\n– Jeremías 33:3",
+        "“El gozo del Señor es mi fortaleza.”\n– Nehemías 8:10"
+    ],
+    // Martes (2)
+    [
+        "“Confía en el Señor con todo tu corazón.”\n– Proverbios 3:5",
+        "“Guarda silencio ante Jehová.”\n– Salmos 37:7",
+        "“Jehová peleará por vosotros.”\n– Éxodo 14:14"
+    ],
+    // Miércoles (3)
+    [
+        "“Todo lo puedo en Cristo que me fortalece.”\n– Filipenses 4:13",
+        "“El que habita al abrigo del Altísimo…”\n– Salmos 91:1",
+        "“No se turbe vuestro corazón.”\n– Juan 14:1"
+    ],
+    // Jueves (4)
+    [
+        "“No temas, porque yo estoy contigo.”\n– Isaías 41:10",
+        "“Él da esfuerzo al cansado.”\n– Isaías 40:29",
+        "“Aunque ande en valle de sombra…”\n– Salmos 23:4"
+    ],
+    // Viernes (5)
+    [
+        "“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39",
+        "“Bendice, alma mía, a Jehová.”\n– Salmos 103:1",
+        "“Jehová es mi luz y mi salvación.”\n– Salmos 27:1"
+    ],
+    // Sábado (6)
+    [
+        "“Porque de tal manera amó Dios al mundo…”\n– Juan 3:16",
+        "“Deléitate asimismo en Jehová…”\n– Salmos 37:4",
+        "“Cantad alegres a Dios, habitantes de toda la tierra.”\n– Salmos 100:1"
+    ]
+];
+
             const dia = new Date().getDay(); // 0 = domingo
-            document.getElementById("versiculoDia").textContent = versiculos[Math.floor(Math.random() * versiculos.length)];
+const versiculosDelDia = versiculosPorDia[dia];
+const versiculoSeleccionado = versiculosDelDia[Math.floor(Math.random() * versiculosDelDia.length)];
+document.getElementById("versiculoDia").textContent = versiculoSeleccionado;
+
 
         }
     </script>
