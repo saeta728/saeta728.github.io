@@ -197,7 +197,8 @@
                 "“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39"
             ];
             const dia = new Date().getDay(); // 0 = domingo
-            document.getElementById("versiculoDia").textContent = versiculos[dia];
+            document.getElementById("versiculoDia").textContent = versiculos[Math.floor(Math.random() * versiculos.length)];
+
         }
     </script>
 </head>
