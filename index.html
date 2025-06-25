@@ -5,6 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horario de Reproducción - Aviradio2</title>
+    <style>
+        .contenedor-flex {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 30px 60px 30px 60px;
+            gap: 60px;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .izquierda {
+            width: 560px;
+        }
+
+        .derecha {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: center;
+            min-height: 315px;
+        }
+
+        #versiculoDia {
+            white-space: pre-line;
+            max-width: 300px;
+        }
+    </style>
+    
     <script>
         function getVideoURL() {
             const now = new Date();
@@ -152,15 +184,34 @@
             } else {
                 document.getElementById('videoContainer').innerHTML = "<p>No hay videos disponibles en este momento.</p>";
             }
+        
+
+         // Versículos
+            const versiculos = [
+                "“Todo lo puedo en Cristo que me fortalece.”\n– Filipenses 4:13",
+                "“Confía en el Señor con todo tu corazón.”\n– Proverbios 3:5",
+                "“El Señor es mi pastor; nada me faltará.”\n– Salmos 23:1",
+                "“Porque de tal manera amó Dios al mundo...”\n– Juan 3:16",
+                "“En el mundo tendréis aflicción; pero confiad...”\n– Juan 16:33",
+                "“No temas, porque yo estoy contigo.”\n– Isaías 41:10",
+                "“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39"
+            ];
+            const dia = new Date().getDay(); // 0 = domingo
+            document.getElementById("versiculoDia").textContent = versiculos[dia];
         }
     </script>
 </head>
-<body onload="loadVideo()" style="background-color: #c82333; margin: 0; padding-top: 30px;">
-    <div style="width: 560px; margin-left: 60px;">
-        <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
-        <h1 style="text-align: center; margin: 0;">Aviradio2</h1>
-        <div id="videoContainer" style="margin-top: 20px;">
-            <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+<body onload="loadVideo()" style="background-color: #c82333; margin: 0;">
+    <div class="contenedor-flex">
+        <div class="izquierda">
+            <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
+            <h1 style="text-align: center; margin: 0;">Aviradio2</h1>
+            <div id="videoContainer" style="margin-top: 20px;">
+                <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="derecha">
+            <div id="versiculoDia"></div>
         </div>
     </div>
 </body>
