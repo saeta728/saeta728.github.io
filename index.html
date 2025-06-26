@@ -2,263 +2,171 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario de Reproducción - Aviradio2</title>
+    <title>Aviradio2</title>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+        }
         .contenedor-flex {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-around;
             align-items: flex-start;
-            padding: 30px 60px;
-            gap: 60px;
-            color: white;
-            font-family: Arial, sans-serif;
+            padding: 20px;
         }
-
-        .izquierda {
-            width: 560px;
-        }
-
-        .derecha {
+        .izquierda, .derecha {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            line-height: 1.6;
-            text-align: center;
-            min-height: 315px;
-        }
-
-        #versiculoDia {
-            white-space: pre-line;
-            max-width: 300px;
+            padding: 20px;
         }
     </style>
     <script>
-        const horarios = [
-            { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8", "https://www.youtube.com/embed/Hs6WG7BUR1g",
-                                          "https://www.youtube.com/embed/Nqo-T1nrGps", "https://www.youtube.com/embed/mDbVhuRD2es"] },
-            
-            { inicio: 6, fin: 10, videos: ["https://www.youtube.com/embed/tF8R3J5yxXc", "https://www.youtube.com/embed/ze6aQY8Djvg",
-                                           "https://www.youtube.com/embed/L7KR6_Ywshc", "https://www.youtube.com/embed/mS1uElTYS-Y",
-                                           "https://www.youtube.com/embed/V2HrK4267vw", "https://www.youtube.com/embed/F_Z8LLQ2Qao",
-                                           "https://www.youtube.com/embed/PsDghdJperY", "https://www.youtube.com/embed/b9AHzHHMfwY",
-                                           "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI",
-                                           "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/rZuEY-TnQ0o",
-                                           "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/k8klF-9ElBE",
-                                           "https://www.youtube.com/embed/KkltNm3fCgU", "https://www.youtube.com/embed/2H7Q2WRy2wU",
-                                           "https://www.youtube.com/embed/qf6woG-Hhso", "https://www.youtube.com/embed/L7rtsbuHr-M",
-                                           "https://www.youtube.com/embed/AufKboDaaAw", "https://www.youtube.com/embed/YB086LtARiE",
-                                           "https://www.youtube.com/embed/-pJrQlYT0ss", "https://www.youtube.com/embed/XtPGiCVwkIk",
-                                           "https://www.youtube.com/embed/5GkUhR7uGks", "https://www.youtube.com/embed/YrlTj31g6hs",
-                                           "https://www.youtube.com/embed/iH43sS35c3o", "https://www.youtube.com/embed/Eo1G44UJJ9A",
-                                           "https://www.youtube.com/embed/EuCTAQmfW4E", "https://www.youtube.com/embed/UbsFCfzQ050",
-                                           "https://www.youtube.com/embed/-pJrQlYT0ss", "https://www.youtube.com/embed/u6DswSEGfgc",
-                                           "https://www.youtube.com/embed/XtPGiCVwkIk", "https://www.youtube.com/embed/J4isSTjy4JA",
-                                           "https://www.youtube.com/embed/YdYfNxpbX18", "https://www.youtube.com/embed/Z70ej7382kU"] },
-            
-            { inicio: 10, fin: 14, videos: ["https://www.youtube.com/embed/FJK35pu5jvc", "https://www.youtube.com/embed/JAckc8DJzSw",
-                                            "https://www.youtube.com/embed/D-egXAWxkgM", "https://www.youtube.com/embed/TORbIOR9XnE",
-                                            "https://www.youtube.com/embed/ehrnPJsf3Cc", "https://www.youtube.com/embed/LFOTURa-E7U",
-                                            "https://www.youtube.com/embed/GWahZQ8VV0g", "https://www.youtube.com/embed/fV8UgvbY6O4",
-                                            "https://www.youtube.com/embed/aeoJy0EvWhc", "https://www.youtube.com/embed/9462rIsNZ04",
-                                            "https://www.youtube.com/embed/8jlZU8VU1mk", "https://www.youtube.com/embed/dxzyz9JAMD4", 
-                                            "https://www.youtube.com/embed/Ez8eEmjqQ7U", "https://www.youtube.com/embed/QNdaor2MqOk",
-                                            "https://www.youtube.com/embed/unzH8rQQCdY", "https://www.youtube.com/embed/YCBbWPmJlsg",
-                                            "https://www.youtube.com/embed/GAMT7mViqJk", "https://www.youtube.com/embed/9jFlRQ0y8Kc",
-                                            "https://www.youtube.com/embed/sXU7z_HlfEQ", "https://www.youtube.com/embed/DKfGZdLsPcw",
-                                            "https://www.youtube.com/embed/F6k2Ew7c5So", "https://www.youtube.com/embed/nGvpKRfknho",
-                                            "https://www.youtube.com/embed/lpoq97syx5U", "https://www.youtube.com/embed/Yjs-5AWXv1w",
-                                            "https://www.youtube.com/embed/h9uV54Xv2AI"] },
-           
-            { inicio: 14, fin: 17, videos: [ "https://www.youtube.com/embed/ZNVrYuTBbMM", "https://www.youtube.com/embed/w-D9OdOb88U",
-                                             "https://www.youtube.com/embed/80rOkf3oQAY", "https://www.youtube.com/embed/cvl_I8TcAsQ",
-                                             "https://www.youtube.com/embed/SPo1wFuQ93Y", "https://www.youtube.com/embed/mTxOwaiu9UY",
-                                             "https://www.youtube.com/embed/luVCFyytVTE", "https://www.youtube.com/embed/NJMWETuxVic",
-                                             "https://www.youtube.com/embed/AbUt4LvhMMk", "https://www.youtube.com/embed/h5eqo206rMs",
-                                             "https://www.youtube.com/embed/cIKjvm9WHfI", "https://www.youtube.com/embed/DjUi-RStaB0",
-                                             "https://www.youtube.com/embed/tnej075ZB78", "https://www.youtube.com/embed/TnsEM8XSY_U",
-                                             "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI",
-                                             "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/3fOFvYLdTps",
-                                             "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/3fOFvYLdTps", 
-                                             "https://www.youtube.com/embed/JgtraFxbstE", "https://www.youtube.com/embed/2W5ARXydRu4",
-                                             "https://www.youtube.com/embed/x4PS2hzfr3o", "https://www.youtube.com/embed/aeiD4710ymM",
-                                             "https://www.youtube.com/embed/iigJUg-uGKQ", "https://www.youtube.com/embed/j0hKk6kUh_o",
-                                             "https://www.youtube.com/embed/3567d1gyPCE", "https://www.youtube.com/embed/XWDCYdKNh-w",
-                                             "https://www.youtube.com/embed/MsrGnbil7jY", "https://www.youtube.com/embed/qrQ1EhYO3V8",
-                                             "https://www.youtube.com/embed/bYgJoYnx3no", "https://www.youtube.com/embed/bYgJoYnx3no"] },
-            
-            { inicio: 17, fin: 19, videos: [ "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/RzKEALM8cOc",
-                                             "https://www.youtube.com/embed/y540ZT-qs6A", "https://www.youtube.com/embed/Hcv6VLTUiIc",
-                                             "https://www.youtube.com/embed/u0EvT4zvNkA", "https://www.youtube.com/embed/LYT_p_a9PDM",
-                                             "https://www.youtube.com/embed/2W5ARXydRu4", "https://www.youtube.com/embed/AaREFDGSB2w",
-                                             "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/05NrrGVq6gc",
-                                             "https://www.youtube.com/embed/BzeIkMk1mNw", "https://www.youtube.com/embed/deCeABQiU_Q",
-                                             "https://www.youtube.com/embed/KYgOoLncI9U", "https://www.youtube.com/embed/nNGHC6pqZH0",
-                                             "https://www.youtube.com/embed/6BRdecwUD8g", "https://www.youtube.com/embed/yVg53uzfGBc",
-                                             "https://www.youtube.com/embed/zksIXWnKIxY", "https://www.youtube.com/embed/HNQJ9m3BQBU",
-                                             "https://www.youtube.com/embed/Wfv4hTTeMmE", "https://www.youtube.com/embed/ybLjOTYt91Q",
-                                             "https://www.youtube.com/embed/lQ8fu-cKtc4", "https://www.youtube.com/embed/AfQ3eXbBd80",
-                                             "https://www.youtube.com/embed/RK55zFKMH8k", "https://www.youtube.com/embed/8EpOvP3kCio",
-                                             "https://www.youtube.com/embed/fagHgx8chFU", "https://www.youtube.com/embed/i9iW70qjp18",
-                                             "https://www.youtube.com/embed/HiLEq0WdVmI", "https://www.youtube.com/embed/IWMcE_adz04",
-                                             "https://www.youtube.com/embed/rpowg1dWkp4", "https://www.youtube.com/embed/2c7jfx6Zak0",
-                                             "https://www.youtube.com/embed/38UIgH72sfU", "https://www.youtube.com/embed/sFVsBICdbSA",
-                                             "https://www.youtube.com/embed/Kf9bVHXkLOA", "https://www.youtube.com/embed/Ss9IlxUNtZQ",
-                                             "https://www.youtube.com/embed/O0onoxSGZ_s", "https://www.youtube.com/embed/wv5PdBs7Hpk",
-                                             "https://www.youtube.com/embed/Sv3qphmN4Zo", "https://www.youtube.com/embed/82nTLOCvn6U",
-                                             "https://www.youtube.com/embed/T8cxFEKFMio", "https://www.youtube.com/embed/zOHh6NOKkKE",
-                                             "https://www.youtube.com/embed/XnB23XfSrzI", "https://www.youtube.com/embed/8UZ54yn8gMo",
-                                             "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/yZaSf7h-mn8",
-                                             "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/_f-0pa4SNFk",
-                                             "https://www.youtube.com/embed/c3YIlBesaEg", "https://www.youtube.com/embed/rF4tLLm5QJA",
-                                             "https://www.youtube.com/embed/g5UePMJY_gs", "https://www.youtube.com/embed/-aIaSMtVWWE",
-                                             "https://www.youtube.com/embed/dnBS59kEjLo", "https://www.youtube.com/embed/1LDeeuVKZZg",
-                                             "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/rnFJ1Q2RQmk",
-                                             "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/CNu7fbFdNRw",
-                                             "https://www.youtube.com/embed/hndXEDGGpLE", "https://www.youtube.com/embed/dzJ5Pl_jbSw",
-                                             "https://www.youtube.com/embed/zcsr9xRJhDc", "https://www.youtube.com/embed/aG-DYzfLSf8",
-                                             "https://www.youtube.com/embed/KHr_cV83Qxw", "https://www.youtube.com/embed/HLzNTFANWrg", 
-                                             "https://www.youtube.com/embed/6OEIR0EUfXA", "https://www.youtube.com/embed/YaaZ6Y-LqPg",
-                                             "https://www.youtube.com/embed/95swADSWOtw", "https://www.youtube.com/embed/yqc2brDLcKY",
-                                             "https://www.youtube.com/embed/qOnXhMeTZBQ", "https://www.youtube.com/embed/zlDxas-Y6zg",
-                                             "https://www.youtube.com/embed/UNJqIMt6ZHA"] },
-           
-             { inicio: 19, fin: 21, videos: [ "https://www.youtube.com/embed/Qm-E4BIxFe0", "https://www.youtube.com/embed/7xh4QR6DKJ4",
-                                              "https://www.youtube.com/embed/aeoJy0EvWhc", "https://www.youtube.com/embed/E3hyZlRKVy4",
-                                              "https://www.youtube.com/embed/1VX604fjYKA", "https://www.youtube.com/embed/AaREFDGSB2w",
-                                              "https://www.youtube.com/embed/1R79CclRS50", "https://www.youtube.com/embed/M9-xhO3QDKc",
-                                              "https://www.youtube.com/embed/iw6dCTY9wto", "https://www.youtube.com/embed/69c_82z8ahk",
-                                              "https://www.youtube.com/embed/fqA-VENOkGw", "https://www.youtube.com/embed/1VX604fjYKA",
-                                              "https://www.youtube.com/embed/M9-xhO3QDKc", "https://www.youtube.com/embed/W45tLCo5oaI",
-                                              "https://www.youtube.com/embed/6A4NVJqFh7M", "https://www.youtube.com/embed/pBrrW4xsH6M",
-                                              "https://www.youtube.com/embed/9FIT5C12I0o", "https://www.youtube.com/embed/5nO8ykldfbw",
-                                              "https://www.youtube.com/embed/JYGHIX7sZgI"] },
-            
-            { inicio: 21, fin: 22, videos: [  "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA",
-                                              "https://www.youtube.com/embed/w0C0Pnx7hVQ", "https://www.youtube.com/embed/z6EtvMMjcTQ",
-                                              "https://www.youtube.com/embed/yK213ukFGJI", "https://www.youtube.com/embed/A9hfWctXfyU",
-                                              "https://www.youtube.com/embed/VwDBCyl8RjY", "https://www.youtube.com/embed/AaREFDGSB2w",
-                                              "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/05NrrGVq6gc"] },
-            
-             { inicio: 22, fin: 24, videos: ["https://www.youtube.com/embed/HqK2nqtqRNg", "https://www.youtube.com/embed/9tHVmvt4Mik",
-                                             "https://www.youtube.com/embed/iA9FlyCH8vc", "https://www.youtube.com/embed/9_PYUpwU5d8",
-                                             "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/GTVLQuyzkJQ",
-                                             "https://www.youtube.com/embed/ARe6K5rtKHg", "https://www.youtube.com/embed/OcyYcnFHa7E",
-                                             "https://www.youtube.com/embed/bHQ_hWpswAg", "https://www.youtube.com/embed/3io4kLYqOlw",
-                                             "https://www.youtube.com/embed/_hUikAsN-m0"] }
-        ];
+        function loadVideo() {
+            const horarios = [
+                { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8", "https://www.youtube.com/embed/Hs6WG7BUR1g",
+                                              "https://www.youtube.com/embed/Nqo-T1nrGps", "https://www.youtube.com/embed/mDbVhuRD2es"] },
+                { inicio: 6, fin: 10, videos: ["https://www.youtube.com/embed/tF8R3J5yxXc", "https://www.youtube.com/embed/ze6aQY8Djvg",
+                                               "https://www.youtube.com/embed/L7KR6_Ywshc", "https://www.youtube.com/embed/mS1uElTYS-Y", 
+                                               "https://www.youtube.com/embed/V2HrK4267vw", "https://www.youtube.com/embed/F_Z8LLQ2Qao", 
+                                               "https://www.youtube.com/embed/PsDghdJperY", "https://www.youtube.com/embed/b9AHzHHMfwY",
+                                               "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI", 
+                                               "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/rZuEY-TnQ0o", 
+                                               "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/k8klF-9ElBE",
+                                               "https://www.youtube.com/embed/KkltNm3fCgU", "https://www.youtube.com/embed/2H7Q2WRy2wU",
+                                               "https://www.youtube.com/embed/qf6woG-Hhso", "https://www.youtube.com/embed/L7rtsbuHr-M", 
+                                               "https://www.youtube.com/embed/AufKboDaaAw", "https://www.youtube.com/embed/YB086LtARiE",
+                                               "https://www.youtube.com/embed/-pJrQlYT0ss", "https://www.youtube.com/embed/XtPGiCVwkIk",
+                                               "https://www.youtube.com/embed/5GkUhR7uGks", "https://www.youtube.com/embed/YrlTj31g6hs",
+                                               "https://www.youtube.com/embed/iH43sS35c3o", "https://www.youtube.com/embed/Eo1G44UJJ9A",
+                                               "https://www.youtube.com/embed/EuCTAQmfW4E", "https://www.youtube.com/embed/UbsFCfzQ050",
+                                               "https://www.youtube.com/embed/-pJrQlYT0ss", "https://www.youtube.com/embed/u6DswSEGfgc", 
+                                               "https://www.youtube.com/embed/XtPGiCVwkIk", "https://www.youtube.com/embed/J4isSTjy4JA",
+                                               "https://www.youtube.com/embed/YdYfNxpbX18", "https://www.youtube.com/embed/Z70ej7382kU"] },
+                 
+                { inicio: 10, fin: 14, videos: ["https://www.youtube.com/embed/FJK35pu5jvc", "https://www.youtube.com/embed/JAckc8DJzSw",
+                    "https://www.youtube.com/embed/D-egXAWxkgM", "https://www.youtube.com/embed/TORbIOR9XnE",
+                    "https://www.youtube.com/embed/ehrnPJsf3Cc", "https://www.youtube.com/embed/LFOTURa-E7U",
+                    "https://www.youtube.com/embed/GWahZQ8VV0g", "https://www.youtube.com/embed/fV8UgvbY6O4",
+                    "https://www.youtube.com/embed/aeoJy0EvWhc", "https://www.youtube.com/embed/9462rIsNZ04",
+                    "https://www.youtube.com/embed/8jlZU8VU1mk", "https://www.youtube.com/embed/dxzyz9JAMD4",
+                    "https://www.youtube.com/embed/Ez8eEmjqQ7U", "https://www.youtube.com/embed/QNdaor2MqOk",
+                    "https://www.youtube.com/embed/unzH8rQQCdY", "https://www.youtube.com/embed/YCBbWPmJlsg",
+                    "https://www.youtube.com/embed/GAMT7mViqJk", "https://www.youtube.com/embed/9jFlRQ0y8Kc",
+                    "https://www.youtube.com/embed/unzH8rQQCdY", "https://www.youtube.com/embed/sXU7z_HlfEQ",
+                    "https://www.youtube.com/embed/YCBbWPmJlsg", "https://www.youtube.com/embed/DKfGZdLsPcw",
+                    "https://www.youtube.com/embed/F6k2Ew7c5So", "https://www.youtube.com/embed/nGvpKRfknho",
+                    "https://www.youtube.com/embed/lpoq97syx5U", "https://www.youtube.com/embed/Yjs-5AWXv1w",
+                    "https://www.youtube.com/embed/h9uV54Xv2AI"] },
+               
+                { inicio: 14, fin: 17, videos: [  "https://www.youtube.com/embed/ZNVrYuTBbMM", "https://www.youtube.com/embed/w-D9OdOb88U",
+                    "https://www.youtube.com/embed/80rOkf3oQAY", "https://www.youtube.com/embed/cvl_I8TcAsQ",
+                    "https://www.youtube.com/embed/SPo1wFuQ93Y", "https://www.youtube.com/embed/mTxOwaiu9UY",
+                    "https://www.youtube.com/embed/luVCFyytVTE", "https://www.youtube.com/embed/NJMWETuxVic",
+                    "https://www.youtube.com/embed/AbUt4LvhMMk", "https://www.youtube.com/embed/h5eqo206rMs",
+                    "https://www.youtube.com/embed/cIKjvm9WHfI", "https://www.youtube.com/embed/DjUi-RStaB0",
+                    "https://www.youtube.com/embed/tnej075ZB78", "https://www.youtube.com/embed/TnsEM8XSY_U",
+                    "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI",
+                    "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/3fOFvYLdTps",
+                    "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/3fOFvYLdTps", 
+                    "https://www.youtube.com/embed/JgtraFxbstE", "https://www.youtube.com/embed/2W5ARXydRu4",
+                    "https://www.youtube.com/embed/x4PS2hzfr3o", "https://www.youtube.com/embed/aeiD4710ymM",
+                    "https://www.youtube.com/embed/iigJUg-uGKQ", "https://www.youtube.com/embed/j0hKk6kUh_o",
+                    "https://www.youtube.com/embed/3567d1gyPCE", "https://www.youtube.com/embed/XWDCYdKNh-w",
+                    "https://www.youtube.com/embed/MsrGnbil7jY", "https://www.youtube.com/embed/qrQ1EhYO3V8",
+                    "https://www.youtube.com/embed/bYgJoYnx3no", "https://www.youtube.com/embed/bYgJoYnx3no"] },
+              
+                { inicio: 17, fin: 19, videos: ["https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/RzKEALM8cOc",
+                    "https://www.youtube.com/embed/y540ZT-qs6A", "https://www.youtube.com/embed/Hcv6VLTUiIc",
+                    "https://www.youtube.com/embed/u0EvT4zvNkA", "https://www.youtube.com/embed/LYT_p_a9PDM",
+                    "https://www.youtube.com/embed/2W5ARXydRu4", "https://www.youtube.com/embed/AaREFDGSB2w",
+                    "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/05NrrGVq6gc",
+                    "https://www.youtube.com/embed/BzeIkMk1mNw", "https://www.youtube.com/embed/deCeABQiU_Q",
+                    "https://www.youtube.com/embed/KYgOoLncI9U", "https://www.youtube.com/embed/nNGHC6pqZH0",
+                    "https://www.youtube.com/embed/6BRdecwUD8g", "https://www.youtube.com/embed/yVg53uzfGBc",
+                    "https://www.youtube.com/embed/zksIXWnKIxY", "https://www.youtube.com/embed/HNQJ9m3BQBU",
+                    "https://www.youtube.com/embed/Wfv4hTTeMmE", "https://www.youtube.com/embed/ybLjOTYt91Q",
+                    "https://www.youtube.com/embed/lQ8fu-cKtc4", "https://www.youtube.com/embed/AfQ3eXbBd80",
+                    "https://www.youtube.com/embed/RK55zFKMH8k", "https://www.youtube.com/embed/8EpOvP3kCio",
+                    "https://www.youtube.com/embed/fagHgx8chFU", "https://www.youtube.com/embed/i9iW70qjp18",
+                    "https://www.youtube.com/embed/HiLEq0WdVmI", "https://www.youtube.com/embed/IWMcE_adz04",
+                    "https://www.youtube.com/embed/rpowg1dWkp4", "https://www.youtube.com/embed/2c7jfx6Zak0",
+                    "https://www.youtube.com/embed/38UIgH72sfU", "https://www.youtube.com/embed/sFVsBICdbSA",
+                    "https://www.youtube.com/embed/Kf9bVHXkLOA", "https://www.youtube.com/embed/Ss9IlxUNtZQ",
+                    "https://www.youtube.com/embed/O0onoxSGZ_s", "https://www.youtube.com/embed/wv5PdBs7Hpk",
+                    "https://www.youtube.com/embed/Sv3qphmN4Zo", "https://www.youtube.com/embed/82nTLOCvn6U",
+                    "https://www.youtube.com/embed/T8cxFEKFMio", "https://www.youtube.com/embed/zOHh6NOKkKE",
+                    "https://www.youtube.com/embed/XnB23XfSrzI", "https://www.youtube.com/embed/8UZ54yn8gMo",
+                    "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/yZaSf7h-mn8",
+                    "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/_f-0pa4SNFk",
+                    "https://www.youtube.com/embed/c3YIlBesaEg", "https://www.youtube.com/embed/rF4tLLm5QJA",
+                    "https://www.youtube.com/embed/g5UePMJY_gs", "https://www.youtube.com/embed/-aIaSMtVWWE",
+                    "https://www.youtube.com/embed/dnBS59kEjLo", "https://www.youtube.com/embed/1LDeeuVKZZg",
+                    "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/rnFJ1Q2RQmk",
+                    "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/CNu7fbFdNRw",
+                    "https://www.youtube.com/embed/hndXEDGGpLE", "https://www.youtube.com/embed/dzJ5Pl_jbSw",
+                    "https://www.youtube.com/embed/zcsr9xRJhDc", "https://www.youtube.com/embed/aG-DYzfLSf8",
+                    "https://www.youtube.com/embed/KHr_cV83Qxw", "https://www.youtube.com/embed/HLzNTFANWrg", 
+                    "https://www.youtube.com/embed/6OEIR0EUfXA", "https://www.youtube.com/embed/YaaZ6Y-LqPg",
+                    "https://www.youtube.com/embed/95swADSWOtw", "https://www.youtube.com/embed/yqc2brDLcKY",
+                    "https://www.youtube.com/embed/qOnXhMeTZBQ", "https://www.youtube.com/embed/zlDxas-Y6zg",
+                    "https://www.youtube.com/embed/UNJqIMt6ZHA"] },
+                
+                { inicio: 19, fin: 21, videos: ["https://www.youtube.com/embed/Qm-E4BIxFe0", "https://www.youtube.com/embed/7xh4QR6DKJ4",
+                    "https://www.youtube.com/embed/aeoJy0EvWhc", "https://www.youtube.com/embed/E3hyZlRKVy4",
+                    "https://www.youtube.com/embed/1VX604fjYKA", "https://www.youtube.com/embed/AaREFDGSB2w",
+                    "https://www.youtube.com/embed/1R79CclRS50", "https://www.youtube.com/embed/M9-xhO3QDKc",
+                    "https://www.youtube.com/embed/iw6dCTY9wto", "https://www.youtube.com/embed/69c_82z8ahk",
+                    "https://www.youtube.com/embed/fqA-VENOkGw", "https://www.youtube.com/embed/1VX604fjYKA",
+                    "https://www.youtube.com/embed/M9-xhO3QDKc", "https://www.youtube.com/embed/W45tLCo5oaI",
+                    "https://www.youtube.com/embed/6A4NVJqFh7M", "https://www.youtube.com/embed/pBrrW4xsH6M",
+                    "https://www.youtube.com/embed/9FIT5C12I0o", "https://www.youtube.com/embed/5nO8ykldfbw",
+                    "https://www.youtube.com/embed/JYGHIX7sZgI"] },
+                
+                { inicio: 21, fin: 22, videos: [ "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA",
+                    "https://www.youtube.com/embed/w0C0Pnx7hVQ", "https://www.youtube.com/embed/z6EtvMMjcTQ",
+                    "https://www.youtube.com/embed/yK213ukFGJI", "https://www.youtube.com/embed/A9hfWctXfyU",
+                    "https://www.youtube.com/embed/VwDBCyl8RjY", "https://www.youtube.com/embed/AaREFDGSB2w",
+                    "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/05NrrGVq6gc"] },
+                
+                { inicio: 22, fin: 24, videos: ["https://www.youtube.com/embed/HqK2nqtqRNg", "https://www.youtube.com/embed/9tHVmvt4Mik",
+                    "https://www.youtube.com/embed/iA9FlyCH8vc", "https://www.youtube.com/embed/9_PYUpwU5d8",
+                    "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/GTVLQuyzkJQ",
+                    "https://www.youtube.com/embed/ARe6K5rtKHg", "https://www.youtube.com/embed/OcyYcnFHa7E",
+                    "https://www.youtube.com/embed/bHQ_hWpswAg", "https://www.youtube.com/embed/3io4kLYqOlw",
+                    "https://www.youtube.com/embed/_hUikAsN-m0"] }
+            ];
 
-        let currentIndex = 0;
+            const ahora = new Date();
+            const horaActual = ahora.getHours();
 
-        function getVideoList() {
-            const now = new Date();
-            const hour = now.getHours();
-            const grupo = horarios.find(h => hour >= h.inicio && hour < h.fin);
-            return grupo ? grupo.videos : [];
-        }
-
-function playRandomVideo() {
-    const videos = getVideoList();
-    if (videos.length === 0) return;
-
-    const randomIndex = Math.floor(Math.random() * videos.length);
-    const videoFrame = document.getElementById("videoFrame");
-    videoFrame.src = videos[randomIndex] + "?autoplay=1&enablejsapi=1&rel=0";
-}
-
-        
-        function playNextVideo() {
-            const videos = getVideoList();
-            if (videos.length === 0) return;
-            if (currentIndex >= videos.length) currentIndex = 0;
-            const videoFrame = document.getElementById("videoFrame");
-            videoFrame.src = videos[currentIndex] + "?autoplay=1&enablejsapi=1";
-            currentIndex++;
-        }
-
-     function loadVideo() {
-    // Carga primer video aleatorio
-    playRandomVideo();
-
-    // Espera a que el iframe esté disponible y crea el reproductor
-    setTimeout(() => {
-        const iframe = document.getElementById("videoFrame");
-        const player = new YT.Player(iframe, {
-            events: {
-                'onStateChange': function(event) {
-                    // Cuando el video termina (estado 0)
-                    if (event.data === YT.PlayerState.ENDED) {
-                        playRandomVideo(); // Reproduce otro aleatorio
-                    }
+            for (const bloque of horarios) {
+                if (horaActual >= bloque.inicio && horaActual < bloque.fin) {
+                    const video = bloque.videos[Math.floor(Math.random() * bloque.videos.length)];
+                    document.getElementById("videoFrame").src = video + "?autoplay=1&mute=1";
+                    break;
                 }
             }
-        });
-    }, 1500); // Pequeño retraso para asegurarse de que el iframe cargó
 
-    // Muestra el versículo
-    mostrarVersiculoDelDia();
-}
+            const versiculosPorDia = [
+                ["“El Señor es mi pastor...” – Salmo 23:1"], // Domingo
+                ["“Confía en el Señor con todo tu corazón.”\n– Proverbios 3:5", "“Guarda silencio ante Jehová.”\n– Salmos 37:7", "“Jehová peleará por vosotros.”\n– Éxodo 14:14"], // Lunes
+                ["“Todo lo puedo en Cristo que me fortalece.”\n– Filipenses 4:13", "“El que habita al abrigo del Altísimo…”\n– Salmos 91:1", "“No se turbe vuestro corazón.”\n– Juan 14:1"], // Martes
+                ["“No temas, porque yo estoy contigo.”\n– Isaías 41:10", "“Él da esfuerzo al cansado.”\n– Isaías 40:29", "“Aunque ande en valle de sombra…”\n– Salmos 23:4"], // Miércoles
+                ["“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39", "“Bendice, alma mía, a Jehová.”\n– Salmos 103:1", "“Jehová es mi luz y mi salvación.”\n– Salmos 27:1"], // Jueves
+                ["“Porque de tal manera amó Dios al mundo…”\n– Juan 3:16", "“Deléitate asimismo en Jehová…”\n– Salmos 37:4", "“Cantad alegres a Dios, habitantes de toda la tierra.”\n– Salmos 100:1"], // Viernes
+                ["“Este es el día que hizo Jehová...” – Salmos 118:24"] // Sábado
+            ];
 
-
-            function mostrarVersiculoDelDia() {
-    const versiculosPorDia = [
-        // Domingo
-        [
-            "“Este es el día que hizo el Señor; nos gozaremos y alegraremos en él.”\n– Salmos 118:24",
-            "“Alegraos en la esperanza; sufridos en la tribulación.”\n– Romanos 12:12",
-            "“Sed agradecidos en todo.”\n– 1 Tesalonicenses 5:18"
-        ],
-        // Lunes
-        [
-            "“El Señor es mi pastor; nada me faltará.”\n– Salmos 23:1",
-            "“Clama a mí y yo te responderé.”\n– Jeremías 33:3",
-            "“El gozo del Señor es mi fortaleza.”\n– Nehemías 8:10"
-        ],
-        // Martes
-        [
-            "“Confía en el Señor con todo tu corazón.”\n– Proverbios 3:5",
-            "“Guarda silencio ante Jehová.”\n– Salmos 37:7",
-            "“Jehová peleará por vosotros.”\n– Éxodo 14:14"
-        ],
-        // Miércoles
-        [
-            "“Todo lo puedo en Cristo que me fortalece.”\n– Filipenses 4:13",
-            "“El que habita al abrigo del Altísimo…”\n– Salmos 91:1",
-            "“No se turbe vuestro corazón.”\n– Juan 14:1"
-        ],
-        // Jueves
-        [
-            "“No temas, porque yo estoy contigo.”\n– Isaías 41:10",
-            "“Él da esfuerzo al cansado.”\n– Isaías 40:29",
-            "“Aunque ande en valle de sombra…”\n– Salmos 23:4"
-        ],
-        // Viernes
-        [
-            "“Nada nos podrá separar del amor de Dios.”\n– Romanos 8:38-39",
-            "“Bendice, alma mía, a Jehová.”\n– Salmos 103:1",
-            "“Jehová es mi luz y mi salvación.”\n– Salmos 27:1"
-        ],
-        // Sábado
-        [
-            "“Porque de tal manera amó Dios al mundo…”\n– Juan 3:16",
-            "“Deléitate asimismo en Jehová…”\n– Salmos 37:4",
-            "“Cantad alegres a Dios, habitantes de toda la tierra.”\n– Salmos 100:1"
-        ]
-    ];
-
-    const dia = new Date().getDay(); // 0 = domingo, 1 = lunes...
-    const versiculosDelDia = versiculosPorDia[dia];
-    const versiculoSeleccionado = versiculosDelDia[Math.floor(Math.random() * versiculosDelDia.length)];
-    document.getElementById("versiculoDia").textContent = versiculoSeleccionado;
-}
-
+            const dia = ahora.getDay();
+            const versiculosDelDia = versiculosPorDia[dia];
+            const versiculoSeleccionado = versiculosDelDia[Math.floor(Math.random() * versiculosDelDia.length)];
+            document.getElementById("versiculoDia").textContent = versiculoSeleccionado;
         }
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
-<body onload="loadVideo()" style="background-color: #282c34;">
+<body onload="loadVideo()">
     <div class="contenedor-flex">
         <div class="izquierda">
             <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
@@ -268,7 +176,7 @@ function playRandomVideo() {
             </div>
         </div>
         <div class="derecha">
-            <div id="versiculoDia" style="font-size: 36px; text-align: center; margin-top: 30px; color: white;"></div>
+            <div id="versiculoDia" style="font-size: 36px; text-align: center; margin-top: 30px;"></div>
         </div>
     </div>
 </body>
