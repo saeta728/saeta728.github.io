@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <="viewport" content="width=device-width, initial-scale=1.0">
   <title>Horario de Reproducción - Aviradio2</title>
   <style>
     body {
@@ -57,13 +58,19 @@
     </div>
   </div>
 
-  <!-- Cargar la API de YouTube -->
   <script src="https://www.youtube.com/iframe_api"></script>
-
   <script>
-    const horarios = [ /* tu arreglo de horarios con videos aquí (sin cambios) */ ];
+    const horarios = [
+      { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8", "https://www.youtube.com/embed/Hs6WG7BUR1g"] },
+      { inicio: 6, fin: 10, videos: ["https://www.youtube.com/embed/tF8R3J5yxXc", "https://www.youtube.com/embed/ze6aQY8Djvg"] },
+      { inicio: 10, fin: 14, videos: ["https://www.youtube.com/embed/FJK35pu5jvc", "https://www.youtube.com/embed/JAckc8DJzSw"] },
+      { inicio: 14, fin: 17, videos: ["https://www.youtube.com/embed/ZNVrYuTBbMM", "https://www.youtube.com/embed/w-D9OdOb88U"] },
+      { inicio: 17, fin: 19, videos: ["https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/RzKEALM8cOc"] },
+      { inicio: 19, fin: 21, videos: ["https://www.youtube.com/embed/Qm-E4BIxFe0", "https://www.youtube.com/embed/7xh4QR6DKJ4"] },
+      { inicio: 21, fin: 22, videos: ["https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA"] },
+      { inicio: 22, fin: 24, videos: ["https://www.youtube.com/embed/HqK2nqtqRNg", "https://www.youtube.com/embed/9tHVmvt4Mik"] }
+    ];
 
-    let currentIndex = 0;
     let player;
 
     function getVideoList() {
@@ -82,26 +89,23 @@
 
     function mostrarVersiculoDelDia() {
       const versiculosPorDia = [
-        ["“Este es el día que hizo el Señor...”\n– Salmos 118:24", "“Alegraos en la esperanza...”\n– Romanos 12:12", "“Sed agradecidos...”\n– 1 Tes. 5:18"],
-        ["“El Señor es mi pastor...”\n– Salmos 23:1", "“Clama a mí...”\n– Jeremías 33:3", "“El gozo del Señor...”\n– Nehemías 8:10"],
-        ["“Confía en el Señor...”\n– Prov. 3:5", "“Guarda silencio ante Jehová.”\n– Salmos 37:7", "“Jehová peleará por vosotros.”\n– Éxodo 14:14"],
-        ["“Todo lo puedo en Cristo...”\n– Fil. 4:13", "“El que habita al abrigo...”\n– Salmos 91:1", "“No se turbe vuestro corazón.”\n– Juan 14:1"],
-        ["“No temas, porque yo estoy contigo.”\n– Isaías 41:10", "“Él da esfuerzo al cansado.”\n– Isaías 40:29", "“Aunque ande en valle...”\n– Salmos 23:4"],
-        ["“Nada nos podrá separar...”\n– Romanos 8:38-39", "“Bendice, alma mía, a Jehová.”\n– Salmos 103:1", "“Jehová es mi luz...”\n– Salmos 27:1"],
-        ["“Porque de tal manera amó Dios...”\n– Juan 3:16", "“Deléitate asimismo en Jehová...”\n– Salmos 37:4", "“Cantad alegres a Dios...”\n– Salmos 100:1"]
+        ["“Este es el día que hizo el Señor...”\n– Salmos 118:24", "“Alegraos en la esperanza...”\n– Romanos 12:12"],
+        ["“El Señor es mi pastor...”\n– Salmos 23:1", "“Clama a mí...”\n– Jeremías 33:3"],
+        ["“Confía en el Señor...”\n– Prov. 3:5", "“Guarda silencio...”\n– Salmos 37:7"],
+        ["“Todo lo puedo en Cristo...”\n– Fil. 4:13", "“El que habita...”\n– Salmos 91:1"],
+        ["“No temas...”\n– Isaías 41:10", "“Él da esfuerzo...”\n– Isaías 40:29"],
+        ["“Nada nos podrá separar...”\n– Romanos 8:38", "“Bendice, alma mía...”\n– Salmos 103:1"],
+        ["“Porque de tal manera amó Dios...”\n– Juan 3:16", "“Deléitate en Jehová...”\n– Salmos 37:4"]
       ];
-
       const dia = new Date().getDay();
       const versiculos = versiculosPorDia[dia];
       const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
       document.getElementById("versiculoDia").textContent = versiculo;
     }
 
-    // API de YouTube llama a esta función al estar lista
     function onYouTubeIframeAPIReady() {
       const videoUrl = getRandomVideoUrl();
       if (!videoUrl) return;
-
       const videoId = videoUrl.split("/embed/")[1];
 
       player = new YT.Player("player", {
@@ -127,7 +131,6 @@
       });
     }
 
-    // Esperar a que cargue el documento completo
     document.addEventListener("DOMContentLoaded", () => {
       mostrarVersiculoDelDia();
     });
