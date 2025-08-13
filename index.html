@@ -9,289 +9,94 @@
       margin: 0;
       padding: 0;
     }
-
     .contenedor-flex {
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
       padding: 30px 60px;
-      gap: 60px;
-      color: white;
-      font-family: Arial, sans-serif;
     }
-
-    .izquierda {
-      width: 560px;
-    }
-
-    .derecha {
+    .video {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      line-height: 1.6;
-      text-align: center;
-      min-height: 315px;
+      margin-right: 20px;
     }
-
-    #versiculoDia {
-      white-space: pre-line;
-      max-width: 300px;
-      font-size: 30px;
+    .versiculo {
+      flex: 1;
+      color: white;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
   <div class="contenedor-flex">
-    <div class="izquierda">
-      <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
-      <h1 style="text-align: center; margin: 0;">Aviradio2</h1>
-      <div id="videoContainer" style="margin-top: 20px;">
-        <div id="player"></div>
-       <h1>Muchas gracias por escuchar aviradio2, a continuación informacion que debe saber:</h1>
-        <p>aviradio2 es una plataforma las 24/7 del año.Tambien es una plataforma unica esto significa que no es necesario recargar la pagina para ver el siguiente video,si no que lo reproduce automaticamente,aqui le damos mas informacion:</p>
-        <h1>Horarios:</h1>
-        <h2>1-5am                    musica instrumental.</h2>
-       <h2>6-10am:musica cristiana,pan del cielo,sid roth,lectura biblica y la voz de la victoria.</h2>
-      <h2>10am-2pm:predica de avivamiento, y galden geven.</h2>
-      <h2>2-5pm:musica cristiana,noticias del mundo cristiano,katery kulman.</h2>
-      <h2>5-7pm:zona kids(un espacio para los niños y niñas), preguntale al pastor ricardo.</h2>
-        <h2>7-9pm:predica de la noche.</h2>
-        <h2>9-10pm:musica de avivamiento.</h2>
-        <h2>10-12pm: noches con jesus.</h2>
-
-        <p>Aviradio2 es una plataforma la cual busca llevar a más personas a Cristo. Fue creado en 2024, gracias a usted puede llevar a mas personas
-        a Cristo. ahora le daremos informacion sobre los personajes que usted escucha:<br> 
-          Redimi2:es un cantante cristiano y vive en republica dominicana, tiene una hija que nacio en estados unidos y a hecho canciones con funky y alexzurdo.<br> 
-          alex zurdo: es otro cantante cristiano y tiene 2 hijos, una niña y un niño. Es de puerto rico y a hecho muchas canciones con funky.<br>
-          funky: es un cantante cristiano de puerto rico y tiene 5 hijos. El a hecho muchas canciones con alex zurdo ya que son de el mismo país.<br>
-          Kike pavon: Nacio en españa pero vive en madird, tiene un hijo y hace canciones para la salvacion pero a veces lo hace con funky.<br>
-          pas.ricardo: es un pastor de un avivamiento y vive en Bogota. Tiene mas de 5 hijos, uno de ellos es el pastor Juan Sebastian. Se dedica a predicar y a salvar personas a cristo.<br>
-          past.patricia: es la pastora de avivamiento y se dedica a la ofrenda y a predicar la fe, tiene 5 hijos ya que es la esposa del pastor ricardo.<br>
-          kevin: es un noticiero que trabaja para informar a los cristianos lo que pasa en el mundo. Tambien trabaja con 2 persona más.<br>
-          katery kulman: Fue una pastora con fuego en estados unidos.<br>
-          superlibro: es una plataforma que crea programas cristianos. Sus personajes principales son: Anita, Luis y tuercas.
-          Dalten gelven: Es un predicador de argentina y es pastor.
-          La voz de la victoria: es un canal de un predicador.<br>
-
-          muchas gracias por estar conectado en aviradio2 las 24/7,esperamos que esta informacion le ayude.Para ver nuestra ultima modificacion abra en atra pestaña aviradio2.Seguimos trabajando.
-
-        </p>
-      <h3>Nota:los programas no son los mismos para todos!!!, Todos lo lunes se hacen modificacione</h3>
-
-
-      </div>
+    <div class="video">
+      <iframe id="player" width="560" height="315" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
-    <div class="derecha">
-      <div id="versiculoDia"></div>
-    </div>
+    <div class="versiculo" id="versiculo"></div>
   </div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    const horarios = [
-      { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8", "https://www.youtube.com/embed/Hs6WG7BUR1g",
-                          "https://www.youtube.com/embed/Nqo-T1nrGps", "https://www.youtube.com/embed/mDbVhuRD2es"
-                    ] },
-      //musica
-      { inicio: 6, fin: 10, videos: [ "https://www.youtube.com/embed/tF8R3J5yxXc", "https://www.youtube.com/embed/iH43sS35c3o",
-                    "https://www.youtube.com/embed/L7KR6_Ywshc", "https://www.youtube.com/embed/mS1uElTYS-Y",
-                    "https://www.youtube.com/embed/V2HrK4267vw", "https://www.youtube.com/embed/F_Z8LLQ2Qao",
-                    "https://www.youtube.com/embed/PsDghdJperY", "https://www.youtube.com/embed/b9AHzHHMfwY",
-                    "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI",
-                    "https://www.youtube.com/embed/e-dOXPqzlJI", "https://www.youtube.com/embed/M1ido-vlT6U",            
-                    //Pan del cielo
-                    "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/AufKboDaaAw",
-                    "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/k8klF-9ElBE",
-                    //Lectura biblica
-                    "https://www.youtube.com/embed/Qvz4HgM1K8g", "https://www.youtube.com/embed/f2MN6Nv3Sfc",
-                    "https://www.youtube.com/embed/XLw4d2ErDzM", "https://www.youtube.com/embed/Z70ej7382kU",
-                    "https://www.youtube.com/embed/3h9BilRqrCE", "https://www.youtube.com/embed/AZBxGITFhbI",
-                    "https://www.youtube.com/embed/GvVDTLZjO8c", "https://www.youtube.com/embed/0a4_QusqGh0", 
-                    //Sid roht
-                    "https://www.youtube.com/embed/6slz2GRh4nA", "https://www.youtube.com/embed/ktm27fngkqU",  
-                    "https://www.youtube.com/embed/YyugXFuRWbc", "https://www.youtube.com/embed/HjmPEIxZHDI",
-
-                                     //LA VOZ DE LA VICTORIA
-                    "https://www.youtube.com/embed/j-Rah9dE7aw", "https://www.youtube.com/embed/Hcdct_WVlxo",
-                    "https://www.youtube.com/embed/FkQ3iN4u6Qc", "https://www.youtube.com/embed/xDjw32wNMxY",
-                    "https://www.youtube.com/embed/XQ5KzREjJMo", "https://www.youtube.com/embed/Nzm-JwFCqg0"                 
-
-                                    ] },
-
-      { inicio: 10, fin: 14, videos: [ "https://www.youtube.com/embed/eCYcKXQ3aA8", "https://www.youtube.com/embed/h0ezGkCvEjg",
-                    "https://www.youtube.com/embed/0sK53Z4AD_8", "https://www.youtube.com/embed/9W1bpLsgelI",
-                    "https://www.youtube.com/embed/xXQBOf4TvL4", "https://www.youtube.com/embed/o2ys27-hzcY",
-                    //en vivo de la 10am
-                    "https://www.youtube.com/embed/ULyuieCxOQE",
-
-                                      //delteh geven
-                    "https://www.youtube.com/embed/M5ipxm9TOpA", "https://www.youtube.com/embed/mAZmxCnpjwE",
-                    "https://www.youtube.com/embed/mxWxeIygBdA", "https://www.youtube.com/embed/XeS-DXCySCM",
-                    "https://www.youtube.com/embed/CBc2gpMvBm0", "https://www.youtube.com/embed/RYOV-n9q5eI",
-                    "https://www.youtube.com/embed/WLvahXebI8Q", "https://www.youtube.com/embed/KLT-EmK3oAA",
-                    "https://www.youtube.com/embed/-FMG10ysx3A", "https://www.youtube.com/embed/M5ipxm9TOpA"                  
-                    "https://www.youtube.com/embed/-FMG10ysx3A", "https://www.youtube.com/embed/M5ipxm9TOpA",
-                    "https://www.youtube.com/embed/bMU2jtS1TYk", "https://www.youtube.com/embed/dI5nINn6I9g",
-                    "https://www.youtube.com/embed/b53h4vc4l4E", "https://www.youtube.com/embed/hEELehtro9w",                  
-                    "https://www.youtube.com/embed/1muVGUfTDh4", "https://www.youtube.com/embed/PrL9Zd1dmW0",
-                    "https://www.youtube.com/embed/JXtlCT8Ta_I", "https://www.youtube.com/embed/v9hPUpfm6fw"                  
-                                      
-                    ] },
-                         //Musica      
-      { inicio: 14, fin: 17, videos: [ "https://www.youtube.com/embed/xHPd8VEiYQs", "https://www.youtube.com/embed/w-D9OdOb88U",
-                    "https://www.youtube.com/embed/80rOkf3oQAY", "https://www.youtube.com/embed/cvl_I8TcAsQ",
-                    "https://www.youtube.com/embed/SPo1wFuQ93Y", "https://www.youtube.com/embed/mTxOwaiu9UY",
-                    "https://www.youtube.com/embed/luVCFyytVTE", "https://www.youtube.com/embed/NJMWETuxVic",
-                    "https://www.youtube.com/embed/AbUt4LvhMMk", "https://www.youtube.com/embed/h5eqo206rMs",
-                    "https://www.youtube.com/embed/cIKjvm9WHfI", "https://www.youtube.com/embed/DjUi-RStaB0",
-                    "https://www.youtube.com/embed/tnej075ZB78", "https://www.youtube.com/embed/lcOpUm_SuG8",
-                    "https://www.youtube.com/embed/UNJqIMt6ZHA",                  
-                    //podcas
-                    "https://www.youtube.com/embed/llcKhII3TeM", "https://www.youtube.com/embed/bz1SZI6UeWI",
-                    "https://www.youtube.com/embed/AaREFDGSB2w", "https://www.youtube.com/embed/3fOFvYLdTps", 
-                    "https://www.youtube.com/embed/JgtraFxbstE", "https://www.youtube.com/embed/04ExMVeojVA",
-                    "https://www.youtube.com/embed/x4PS2hzfr3o", "https://www.youtube.com/embed/aeiD4710ymM",
-                    "https://www.youtube.com/embed/iigJUg-uGKQ", 
-                       //Katery kulman               
-                    "https://www.youtube.com/embed/j0hKk6kUh_o", "https://www.youtube.com/embed/hblzImn5NXs",
-                    "https://www.youtube.com/embed/3567d1gyPCE", "https://www.youtube.com/embed/XWDCYdKNh-w",
-                    "https://www.youtube.com/embed/MsrGnbil7jY", "https://www.youtube.com/embed/qrQ1EhYO3V8",
-                    "https://www.youtube.com/embed/L1cODgGckGE", "https://www.youtube.com/embed/yuuZZkKmjD4",                  
-                      //noticia                
-                    "https://www.youtube.com/embed/2pQM28fvh1o", "https://www.youtube.com/embed/bYgJoYnx3no",
-                    "https://www.youtube.com/embed/dcyy0II2vHv", "https://www.youtube.com/embed/7MyLJJAy5dk",
-                    "https://www.youtube.com/embed/mr0_lMDgxMM", "https://www.youtube.com/embed/M0zm2d1UZB4",
-                    "https://www.youtube.com/embed/oUBxXkvWa9o", "https://www.youtube.com/embed/QAr2SykHM4E",
-                    "https://www.youtube.com/embed/_mrdBJ5_J_8", "https://www.youtube.com/embed/80vMa9rZzaU",
-                    "https://www.youtube.com/embed/3gcXD4FDxEM",
-                    //Lectura biblica
-                    "https://www.youtube.com/embed/Fe1h5BDk4Y4", "https://www.youtube.com/embed/OU16-2Sg_CQ",
-                    "https://www.youtube.com/embed/NUW1Frg8DA0", "https://www.youtube.com/embed/3jUPGTb80ms",
-                    "https://www.youtube.com/embed/EobkNEf-ySA", "https://www.youtube.com/embed/gsXLQkppzUc",
-                    "https://www.youtube.com/embed/bPzhlL9zKmg", "https://www.youtube.com/embed/CxiSs-SHTuI",
-                    "https://www.youtube.com/embed/5h7Q0EK-m8I", "https://www.youtube.com/embed/ZKaaHQUdVCY",
-                    "https://www.youtube.com/embed/PgV57gK-Xow", "https://www.youtube.com/embed/DMXA-GERRzY",
-                    "https://www.youtube.com/embed/UKDdIL1ysQ8", "https://www.youtube.com/embed/QG1wZ3ZQFXc",
-                    "https://www.youtube.com/embed/uT_ZBzWGwI0", "https://www.youtube.com/embed/hIDVX7plWw0",
-                    "https://www.youtube.com/embed/FXHJHcs4zP8", "https://www.youtube.com/embed/FLPzEkwaFro",
-                    "https://www.youtube.com/embed/I8MjeqZj0pg", "https://www.youtube.com/embed/TqAKPK0VVa4"
-                                     ] },
-      //superlibro y cafe der los cuentos
-      { inicio: 17, fin: 19, videos: ["https://www.youtube.com/embed/05NrrGVq6gc",
-                    "https://www.youtube.com/embed/BzeIkMk1mNw", "https://www.youtube.com/embed/deCeABQiU_Q",
-                    "https://www.youtube.com/embed/fagHgx8chFU", "https://www.youtube.com/embed/i9iW70qjp18",
-                    "https://www.youtube.com/embed/HiLEq0WdVmI", "https://www.youtube.com/embed/IWMcE_adz04",
-                    "https://www.youtube.com/embed/rpowg1dWkp4", "https://www.youtube.com/embed/2c7jfx6Zak0",
-                    "https://www.youtube.com/embed/38UIgH72sfU", "https://www.youtube.com/embed/sFVsBICdbSA",
-                    "https://www.youtube.com/embed/Kf9bVHXkLOA", "https://www.youtube.com/embed/Ss9IlxUNtZQ",
-
-                    //sponky y mas
-                    "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/yZaSf7h-mn8",
-                    "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/_f-0pa4SNFk",
-
-                    //pelicula infantil
-                    "https://www.youtube.com/embed/dnBS59kEjLo", "https://www.youtube.com/embed/1LDeeuVKZZg",
-                    "https://www.youtube.com/embed/rnFJ1Q2RQmk", "https://www.youtube.com/embed/hndXEDGGpLE",
-                    "https://www.youtube.com/embed/05NrrGVq6gc", "https://www.youtube.com/embed/CNu7fbFdNRw",
-
-                    //Peliculas
-                    "https://www.youtube.com/embed/zcsr9xRJhDc", "https://www.youtube.com/embed/aG-DYzfLSf8",
-                    "https://www.youtube.com/embed/KHr_cV83Qxw", "https://www.youtube.com/embed/HLzNTFANWrg", 
-                    "https://www.youtube.com/embed/6OEIR0EUfXA", "https://www.youtube.com/embed/YaaZ6Y-LqPg",
-                    "https://www.youtube.com/embed/95swADSWOtw", "https://www.youtube.com/embed/yqc2brDLcKY"
-
-                    ] },
-
-      { inicio: 19, fin: 21, videos: ["https://www.youtube.com/embed/6A4NVJqFh7M", "https://www.youtube.com/embed/pBrrW4xsH6M",
-                    //en vivo
-                    "https://www.youtube.com/embed/sMWHZO4CpUI"] },
-
-      { inicio: 21, fin: 22, videos: [ "https://www.youtube.com/embed/ijEeywH2uDE", "https://www.youtube.com/embed/fL1WiLEvqqA",
-                    "https://www.youtube.com/embed/w0C0Pnx7hVQ", "https://www.youtube.com/embed/z6EtvMMjcTQ",
-                    "https://www.youtube.com/embed/yK213ukFGJI", "https://www.youtube.com/embed/A9hfWctXfyU",
-                    "https://www.youtube.com/embed/VwDBCyl8RjY", "https://www.youtube.com/embed/AaREFDGSB2w",
-                    "https://www.youtube.com/embed/05NrrGVq6gc"] },
-
-      { inicio: 22, fin: 24, videos: [ "https://www.youtube.com/embed/HqK2nqtqRNg", "https://www.youtube.com/embed/9tHVmvt4Mik",
-                    "https://www.youtube.com/embed/iA9FlyCH8vc", "https://www.youtube.com/embed/9_PYUpwU5d8",
-                    "https://www.youtube.com/embed/rZuEY-TnQ0o", "https://www.youtube.com/embed/GTVLQuyzkJQ",
-                    "https://www.youtube.com/embed/ARe6K5rtKHg", "https://www.youtube.com/embed/OcyYcnFHa7E",
-                    "https://www.youtube.com/embed/bHQ_hWpswAg", "https://www.youtube.com/embed/3io4kLYqOlw",
-                    "https://www.youtube.com/embed/_hUikAsN-m0", "https://www.youtube.com/embed/HqK2nqtqRNg",
-                    "https://www.youtube.com/embed/wFRn6v3L6fI", "https://www.youtube.com/embed/dwtZ9ACg38o"                 ] }
+    const videosPorHora = [
+      { inicio: 1, fin: 5, videos: [
+        "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "https://www.youtube.com/embed/9bZkp7q19f0"
+      ]},
+      { inicio: 6, fin: 10, videos: [
+        "https://www.youtube.com/embed/WLvahXebI8Q",
+        "https://www.youtube.com/embed/KLT-EmK3oAA",
+        "https://www.youtube.com/embed/-FMG10ysx3A",
+        "https://www.youtube.com/embed/M5ipxm9TOpA",
+        "https://www.youtube.com/embed/7dcyy0II2vHv4",
+        "https://www.youtube.com/embed/hEELehtro9w"
+      ]},
+      { inicio: 10, fin: 14, videos: [
+        "https://www.youtube.com/embed/abcd1234",
+        "https://www.youtube.com/embed/efgh5678"
+      ]}
     ];
 
-    let player;
-
-    function getVideoList() {
-      const now = new Date();
-      const hour = now.getHours();
-      const grupo = horarios.find(h => hour >= h.inicio && hour < h.fin);
-      return grupo ? grupo.videos : [];
-    }
+    const versiculos = [
+      "El Señor es mi pastor; nada me faltará. - Salmo 23:1",
+      "Todo lo puedo en Cristo que me fortalece. - Filipenses 4:13",
+      "Jehová es mi luz y mi salvación. - Salmo 27:1"
+    ];
 
     function getRandomVideoUrl() {
-      const videos = getVideoList();
-      if (videos.length === 0) return null;
-      const randomIndex = Math.floor(Math.random() * videos.length);
-      return videos[randomIndex];
+      const horaActual = new Date().getHours();
+      const rango = videosPorHora.find(r => horaActual >= r.inicio && horaActual <= r.fin);
+      if (!rango) return "";
+      const indice = Math.floor(Math.random() * rango.videos.length);
+      return rango.videos[indice];
     }
 
-    function mostrarVersiculoDelDia() {
-      const versiculosPorDia = [
-        ["“Proverbios de Salomón, hijo de David, rey de Israel:para adquirir sabiduría y disciplina; para discernir palabras de inteligencia;3,para recibir la corrección que dan la prudencia, la rectitud, la justicia y la equidad;4.para infundir prudencia en los inexpertos, conocimiento y discreción en los jóvenes.5,Escuche esto el sabio y aumente su saber; reciba dirección el entendido,6.para discernir el proverbio y la parábola,  los dichos de los sabios y sus enigmas.7,El temor del Señor es el principio del conocimiento;   los necios desprecian la sabiduría y la disciplina...”\n– probervio 2:1-7", "“Jehová, no me reprendas en tu furor, ni me castigues en tu ira. 2,porque tus saetas cayeron sobre mí, y subre mi ha descendido tu mano.3,nada hay sano en mi carne, a causa de tu ira; ni hay paz en mis huesos, a causa de mi pecado.4,porque mis iniquidades se han agravado sobre mi cabeza ...”\n– Salmo 38:1-10"],
-
-        ["“Moisés ascendió de las llanuras de Moab al monte Nebo, a la cima del monte Pisgá, frente a Jericó. Allí el Señor le mostró todo el territorio que se extiende desde Galaad hasta Dan, 2 todo el territorio de Neftalí y de Efraín, Manasés y Judá, hasta el mar Mediterráneo. 3 Le mostró también la región del Néguev y la del valle de Jericó, la Ciudad de Palmeras, hasta Zoar. 4 Luego el Señor dijo: «Este es el territorio que juré a Abraham, Isaac y Jacob que daría a sus descendientes. Te he permitido verlo con tus propios ojos, pero no podrás entrar en él»5 Allí en Moab murió Moisés, siervo del Señor, tal como el Señor se lo había dicho. 6 Y lo sepultó en Moab, en el valle que está frente a Bet Peor, pero hasta la fecha nadie sabe dónde está su sepultura. 7 Moisés tenía ciento veinte años cuando murió. Con todo, no se había debilitado su vista ni había perdido su vigor. 8 Durante treinta días los israelitas lloraron a Moisés en las llanuras de Moab, guardando así el tiempo de llanto y luto por su muerte....”\n– deuteronmio 34:1-8", "“ Después de la muerte de Josué, los israelitas preguntaron al Señor: ¿Quién de nosotros será el primero en subir y pelear contra los cananeos?  El Señor respondió: Judá será el primero en subir, puesto que ya he entregado el país en sus manos. 3 Entonces los de la tribu de Judá dijeron a sus hermanos de la tribu de Simeón: «Suban con nosotros al territorio que nos ha tocado y pelearemos contra los cananeos; después nosotros iremos con ustedes al territorio que les tocó». Y los de la tribu de Simeón los acompañaron.  Cuando Judá atacó, el Señor entregó en sus manos a los cananeos y a los ferezeos. En Bézec derrotaron a diez mil hombres. 5 Allí se toparon con Adoní Bézec y pelearon contra él, y derrotaron a los cananeos y a los ferezeos. 6 Adoní Bézec logró escapar, pero lo persiguieron hasta que lo capturaron, y le cortaron los pulgares de las manos y los dedos gordos de los pies...”\n– Jueces 1:1-6"],
-
-        ["“Cuando Mardoqueo se enteró de todo lo que se había hecho, se rasgó las vestiduras, se vistió de luto, se cubrió de ceniza y salió por la ciudad dando gritos de amargura. 2 Pero, como a nadie se le permitía entrar a palacio vestido de luto, solo pudo llegar hasta la puerta del rey. 3 En cada provincia adonde llegaban el edicto y la orden del rey, había gran duelo entre los judíos, con ayuno, llanto y lamentos. Muchos de ellos, vestidos de luto, se tendían sobre la ceniza. 4 Cuando las criadas y los eunucos de la reina Ester llegaron y le contaron lo que pasaba, ella se angustió mucho y envió ropa a Mardoqueo para que se la pusiera en lugar de la ropa de luto; pero él no la aceptó. 5 Entonces Ester mandó llamar a Hatac, uno de los eunucos del rey puesto al servicio de ella, y le ordenó que averiguara qué preocupaba a Mardoqueo y por qué actuaba de esa manera. 6 Así que Hatac salió a ver a Mardoqueo, que estaba en la plaza de la ciudad, frente a la puerta del rey. 7 Mardoqueo contó todo lo que le había sucedido, mencionando incluso la cantidad exacta de dinero que Amán había prometido pagar al tesoro real por la aniquilación de los judíos. 8 También le dio una copia del texto del edicto promulgado en Susa que ordenaba el exterminio, para que se lo mostrara a Ester, se lo explicara y le ordenara que se presentara ante el rey para implorar clemencia e interceder en favor de su pueblo. 9 Hatac regresó e informó a Ester lo que Mardoqueo había dicho. 10 Entonces ella ordenó a Hatac que dijera a Mardoqueo: 11 «Todos los servidores del rey y el pueblo de las provincias del reino saben que para cualquier hombre o mujer que, sin ser invitado por el rey, se acerque a él en el patio interior, hay una sola ley: la pena de muerte. La única excepción es que el rey, extendiendo su cetro de oro, le perdone la vida. En cuanto a mí, hace ya treinta días que el rey no me ha pedido presentarme ante él». 12 Cuando Mardoqueo se enteró de lo que había dicho Ester,...”\n– ester 4:1-12", "“Un día, en el mes de nisán del año veinte del reinado de Artajerjes, al ofrecerle vino al rey, como él nunca me había visto triste, 2 me preguntó:...”\n– Salmos 37:7"],
-
-        ["“Mientras estuvo en Hebrón, David tuvo los siguientes hijos: Su primogénito fue Amnón, hijo de Ajinoán la jezrelita;  el segundo, Quileab, hijo de Abigaíl, viuda de Nabal de Carmel; el tercero, Absalón, hijo de Macá, la hija del rey Talmay de Guesur;4 el cuarto, Adonías, hijo de Jaguit; el quinto, Sefatías, hijo de Abital; 5 el sexto, Itreán, hijo de Eglá, que era otra esposa de David...”\n– 2sam. 5:2-5", "“Al tercer día se celebró una boda en Caná de Galilea y la madre de Jesús se encontraba allí. 2 También habían sido invitados a la boda Jesús y sus discípulos. 3 Cuando el vino se acabó, la madre de Jesús le dijo: Ya no tienen vino. Mujer, ¿eso qué tiene que ver conmigo? respondió Jesús—. Todavía no ha llegado mi hora. 5 Su madre dijo a los sirvientes: Hagan lo que él les ordene. 6 Había allí seis tinajas de piedra, de las que usan los judíos en sus ceremonias de purificación. En cada una cabían unos cien litros.Jesús dijo a los sirvientes: Llenen de agua las tinajas.Y los sirvientes las llenaron hasta el borde.Ahora saquen un poco y llévenlo al encargado del banquete —dijo Jesús. Así lo hicieron. 9 El encargado del banquete probó el agua convertida en vino sin saber de dónde había salido, aunque sí lo sabían los sirvientes que habían sacado el agua. Entonces llamó aparte al novio 10 y le dijo:...”\n–  juan 2:1-10"],
-
-        ["“18 El nacimiento de Jesucristo fue así: Su madre, María, estaba comprometida para casarse con José; pero, antes de unirse a él, resultó que estaba embarazada por el poder del Espíritu Santo. 19 Como José, su esposo, era un hombre justo y no quería exponerla a vergüenza pública, decidió romper en secreto el compromiso. 20 Pero cuando él estaba considerando hacerlo se le apareció en sueños un ángel del Señor y le dijo: «José, hijo de David, no temas recibir a María por esposa, porque ella ha concebido por el poder del Espíritu Santo. 21 Dará a luz un hijo y le pondrás por nombre Jesús,[d] porque él salvará a su pueblo de sus pecados». 22 Todo esto sucedió para que se cumpliera lo que el Señor había dicho por medio del profeta:23 «La virgen concebirá y dará a luz un hijo y lo llamarán Emanuel» que significa «Dios con nosotros»24 Cuando José se despertó, hizo lo que el ángel del Señor le había mandado y recibió a María por esposa. 25 Pero no tuvo relaciones conyugales con ella hasta que dio a luz un hijo, a quien le puso por nombre Jesús.....”\n– mateo 1:18-24", "“ 3 El tentador se acercó y le propuso:Si eres el Hijo de Dios, ordena a estas piedras que se conviertan en pan.4 Jesús respondió:Escrito está: No solo de pan vive el hombre, sino de toda palabra que sale de la boca de Dios 5 Luego el diablo lo llevó a la ciudad santa e hizo que se pusiera de pie sobre la parte más alta del Templo 6 y le dijo:....”\n– mateo 1:1-5"],
-
-        ["“Por lo cual estuy seguro de que ni la muerte, ni la vida, ni angeles,ni principados,ni potestades,ni lo presente ni lo por medir, ni lo alto ni lo profundo, ni ninguna otra cosa creada nos podra separar del amor de Dios, que es en cristo jesus Señor nuestro. ”\n– Romanos 8:37-38", "“Bendice, alma mía...”\n– Salmos 103:1"],
-
-        ["“Porque de tal manera amó Dios...”\n– Juan 3:16", "“Deléitate en Jehová...”\n– Salmos 37:4"]
-      ];
-      const dia = new Date().getDay();
-      const versiculos = versiculosPorDia[dia];
-      const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
-      document.getElementById("versiculoDia").textContent = versiculo;
+    function getRandomVersiculo() {
+      const indice = Math.floor(Math.random() * versiculos.length);
+      return versiculos[indice];
     }
 
+    const player = document.getElementById("player");
+    player.src = getRandomVideoUrl() + "?enablejsapi=1&autoplay=1";
+
+    document.getElementById("versiculo").textContent = getRandomVersiculo();
+
+    // Cargar API de YouTube
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    let ytPlayer;
     function onYouTubeIframeAPIReady() {
-      const videoUrl = getRandomVideoUrl();
-      if (!videoUrl) return;
-      const videoId = videoUrl.split("/embed/")[1];
-
-      player = new YT.Player("player", {
-        height: "315",
-        width: "560",
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          rel: 0,
-          modestbranding: 1
-        },
+      ytPlayer = new YT.Player('player', {
         events: {
-          onStateChange: function(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-              const nextUrl = getRandomVideoUrl();
-              if (nextUrl) {
-                const nextId = nextUrl.split("/embed/")[1];
-                player.loadVideoById(nextId);
-              }
-            }
-          }
+          'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      mostrarVersiculoDelDia();
-    });
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        ytPlayer.loadVideoByUrl(getRandomVideoUrl());
+      }
+    }
   </script>
 </body>
 </html>
