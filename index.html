@@ -5,7 +5,7 @@
   <title>Horario de Reproducción - Aviradio2</title>
   <style>
     body {
-      background-color:#00BFFF;
+      background-color: #00BFFF;
       margin: 0;
       padding: 0;
     }
@@ -37,8 +37,15 @@
 
     #versiculoDia {
       white-space: pre-line;
-      max-width: 300px;
-      font-size: 30px;
+      max-width: 420px;
+      font-size: 20px;
+      text-align: left;
+      color: #fff;
+    }
+
+    .schedule h2, .schedule h1, .schedule p, .schedule h3 {
+      color: #fff;
+      margin: 6px 0;
     }
   </style>
 </head>
@@ -46,174 +53,126 @@
   <div class="contenedor-flex">
     <div class="izquierda">
       <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
-      <h1 style="text-align: center; margin: 0;">Horario de Reproducción</h1>
+      <h2 style="text-align: center; margin: 6px 0 0 0;">Reproductor de fuego</h2>
+
+      <!-- Reproductor único -->
       <div id="player" style="margin-top: 20px;"></div>
 
-       <h1>Muchas gracias por escuchar aviradio2, a continuación informacion que debe saber:</h1>
+      <div class="schedule" style="margin-top: 20px;">
+        <h1>Muchas gracias por escuchar aviradio2, a continuación información que debe saber:</h1>
         <p>aviradio2 es una plataforma las 24/7 del año.</p>
         <h1>Horarios:</h1>
-        <h2>1-5am                    musica instrumental.</h2>
-       <h2>6-10am:musica cristiana,pan del cielo,sid roth y lectura biblica.</h2>
-      <h2>10am-2pm:predica de avivamiento, y dante gebel.</h2>
-      <h2>2-5pm:musica cristiana, noticias cristianas.</h2>
-      <h2>5-7pm:zona kids(un espacio para los niños y niñas).</h2>
-        <h2>7-9pm:predica de la noche, dante gebel, sidt roth noche.</h2>
-        <h2>9-10pm:peliculas cristianas.</h2>
-        <h2>10-12pm: noches con jesus y sinmitomanos.</h2>
-      <h3>Nota:los programas no son los mismos para todos!!!, Todos lo lunes se hacen modificacione</h3>
+        <h2>1-5am: música instrumental.</h2>
+        <h2>6-10am: música cristiana, Pan del Cielo, Sid Roth y lectura bíblica.</h2>
+        <h2>10am-2pm: prédica de avivamiento y Dante Gebel.</h2>
+        <h2>2-5pm: música cristiana, noticias cristianas.</h2>
+        <h2>5-7pm: zona kids (un espacio para los niños y niñas).</h2>
+        <h2>7-9pm: prédica de la noche, Dante Gebel, Sid Roth noche.</h2>
+        <h2>9-10pm: películas cristianas.</h2>
+        <h2>10pm-12am: noches con Jesús y sinmitomanos.</h2>
+        <h3>Nota: los programas no son los mismos para todos. Todos los lunes se hacen modificaciones.</h3>
 
-      <p>Aviradio2: Ciudad creada: bucaramanga. Disponible en idioma: español.100% cristiano.
-      </p>
-
-
+        <p>Aviradio2: Ciudad creada: Bucaramanga. Disponible en idioma: español. 100% cristiano.</p>
       </div>
     </div>
+
     <div class="derecha">
       <div id="versiculoDia"></div>
-    <div class="contenedor-flex">
-  <div class="columna-video">
-    <div id="player"></div>
-  </div>
-  <div class="columna-versiculo">
-    <div id="versiculo"></div>
     </div>
   </div>
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
+    // Horarios corregidos: cada objeto tiene inicio, fin y array de videos.
     const horarios = [
-      { inicio: 1, fin: 5, videos: ["https://www.youtube.com/embed/sslrepbO5M8", "https://www.youtube.com/embed/Hs6WG7BUR1g",
-                          "https://www.youtube.com/embed/Nqo-T1nrGps", "https://www.youtube.com/embed/mDbVhuRD2es"
-                    ] },
-
-      { inicio: 6, fin: 10, videos: [ 
-        //alex zurdo
-        "https://www.youtube.com/embed/iHk1JUeRKnI", "https://www.youtube.com/embed/vcTF1R3GQ28",
-        "https://www.youtube.com/embed/Zm8gVuOp6Bs", "https://www.youtube.com/embed/dn6niGluKiE",
+      { inicio: 1, fin: 5, videos: [
+        "https://www.youtube.com/embed/sslrepbO5M8",
+        "https://www.youtube.com/embed/Hs6WG7BUR1g",
+        "https://www.youtube.com/embed/Nqo-T1nrGps",
+        "https://www.youtube.com/embed/mDbVhuRD2es"
+      ]},
+      { inicio: 6, fin: 10, videos: [
+        "https://www.youtube.com/embed/iHk1JUeRKnI",
+        "https://www.youtube.com/embed/vcTF1R3GQ28",
+        "https://www.youtube.com/embed/Zm8gVuOp6Bs",
+        "https://www.youtube.com/embed/dn6niGluKiE",
         "https://www.youtube.com/embed/QuJ-VLwvM9o",
-        //funky
-        "https://www.youtube.com/embed/Fd6u7tFhGKg", "https://www.youtube.com/embed/qPdcmZsRLHI",
-        "https://www.youtube.com/embed/eGhWT70qL6c", "https://www.youtube.com/embed/fbgM-Gqh8_c",
-        "https://www.youtube.com/embed/4MnvE2-sK7Q",
-                    //Pan del cielo
-                    "https://www.youtube.com/embed/tqwuSj_6xVs", "https://www.youtube.com/embed/IZRLqh_fEnM",
-                    "https://www.youtube.com/embed/JFMBxw69NOE", "https://www.youtube.com/embed/8ZQY7k2UTLU",
-                    //Lectura biblica
-                    "https://www.youtube.com/embed/Qvz4HgM1K8g", "https://www.youtube.com/embed/f2MN6Nv3Sfc",
-                    "https://www.youtube.com/embed/XLw4d2ErDzM", "https://www.youtube.com/embed/Z70ej7382kU",
-                    "https://www.youtube.com/embed/3h9BilRqrCE", "https://www.youtube.com/embed/AZBxGITFhbI",
-                    "https://www.youtube.com/embed/GvVDTLZjO8c", "https://www.youtube.com/embed/a_pKrGtV4Oc", 
-                    //Sid roht
-                    "https://www.youtube.com/embed/BK3WS2Lqb2k", "https://www.youtube.com/embed/sHYXp0oUxQ0",  
-                    "https://www.youtube.com/embed/5val67Qjm9M", "https://www.youtube.com/embed/OS_KZJ5xqmU",
-                    "https://www.youtube.com/embed/3nmNr8-FiD0", "https://www.youtube.com/embed/Wsst-zIwozc",
-                    "https://www.youtube.com/embed/bBiBjIWa200", "https://www.youtube.com/embed/mlQaJoMKl_Y", 
-                                    ] },
-//avivamiento
-      { inicio: 10, fin: 14, videos: [ "https://www.youtube.com/embed/B9YMRfBN94Q", "https://www.youtube.com/embed/UZImbkaVA1k",
-                    "https://www.youtube.com/embed/ooLWXIbLi_g", "https://www.youtube.com/embed/Q2s0SvwyXqU",
-                    //en vivo de la 10am
-                    //"",
-
-                                      //delteh geven                  
-                    "https://www.youtube.com/embed/kSJa40uCctE", "https://www.youtube.com/embed/1v0ORRfH8tI",
-                    "https://www.youtube.com/embed/b53h4vc4l4E", "https://www.youtube.com/embed/hEELehtro9w",                  
-                    "https://www.youtube.com/embed/1muVGUfTDh4", "https://www.youtube.com/embed/PrL9Zd1dmW0",
-                    "https://www.youtube.com/embed/AJluTr3ws0o", "https://www.youtube.com/embed/AsqKCw_IX88",                  
-
-                    ] },
-                         //Musica      
+        "https://www.youtube.com/embed/Fd6u7tFhGKg",
+        "https://www.youtube.com/embed/qPdcmZsRLHI"
+      ]},
+      { inicio: 10, fin: 14, videos: [
+        "https://www.youtube.com/embed/B9YMRfBN94Q",
+        "https://www.youtube.com/embed/UZImbkaVA1k",
+        "https://www.youtube.com/embed/ooLWXIbLi_g"
+      ]},
       { inicio: 14, fin: 17, videos: [
-        //Redimi2
-        "https://www.youtube.com/embed/-_WSYpuXcb8", "https://www.youtube.com/embed/6MJpI_KMm64",
-        "https://www.youtube.com/embed/DCeEMhzi9QE", "https://www.youtube.com/embed/hl7QLMDazpA",
-        "https://www.youtube.com/embed/PcBt5Q3peEg", "https://www.youtube.com/embed/uCsiT8PuvYw",
-                    //Lectura biblica
-                 "https://www.youtube.com/embed/a_pKrGtV4Oc",
-                                     ] },
-      //superlibro y cafe der los cuentos
+        "https://www.youtube.com/embed/-_WSYpuXcb8",
+        "https://www.youtube.com/embed/6MJpI_KMm64",
+        "https://www.youtube.com/embed/DCeEMhzi9QE"
+      ]},
       { inicio: 17, fin: 19, videos: [
-        //superlibro
-
-                    //sponky y mas
-                    "https://www.youtube.com/embed/k9hXRsCtFFk", "https://www.youtube.com/embed/yZaSf7h-mn8",
-                    "https://www.youtube.com/embed/k9hXRsCtFFk",
-
-                    //pelicula infantil
-                    "https://www.youtube.com/embed/dnBS59kEjLo", "https://www.youtube.com/embed/1LDeeuVKZZg",
-                 //mi primera biblia sin collecion
-
-
-
-                    ] },
-//avivamiento
-      { inicio: 19, fin: 21, videos: ["https://www.youtube.com/embed/B9YMRfBN94Q", "https://www.youtube.com/embed/UZImbkaVA1k",
-                    "https://www.youtube.com/embed/ooLWXIbLi_g", "https://www.youtube.com/embed/Q2s0SvwyXqU",
-                    //sid roth
-                    "https://www.youtube.com/embed/BK3WS2Lqb2k", "https://www.youtube.com/embed/sHYXp0oUxQ0",  
-                    "https://www.youtube.com/embed/5val67Qjm9M", "https://www.youtube.com/embed/OS_KZJ5xqmU",
-                                      //dante gebel
-                    "https://www.youtube.com/embed/kSJa40uCctE", "https://www.youtube.com/embed/1v0ORRfH8tI",
-                    "https://www.youtube.com/embed/b53h4vc4l4E", "https://www.youtube.com/embed/hEELehtro9w",                  
-                    "https://www.youtube.com/embed/1muVGUfTDh4", "https://www.youtube.com/embed/PrL9Zd1dmW0",
-                    "https://www.youtube.com/embed/AJluTr3ws0o", "https://www.youtube.com/embed/AsqKCw_IX88",                  
-
-                                      //en vivo
-                    //"https://www.youtube.com/embed/S2Sn_plv7tw"] },
-
-      { inicio: 21, fin: 22, videos: [ ] },
-"https://www.youtube.com/embed/uu1OLcHjmQo", "https://www.youtube.com/embed/Cz-aiFtjQVo",
-"https://www.youtube.com/embed/zG6lcw3h6fs", "https://www.youtube.com/embed/a7EoEvMPYZ0",
-"https://www.youtube.com/embed/uNSH5Tj40sA",                                      
+        "https://www.youtube.com/embed/k9hXRsCtFFk",
+        "https://www.youtube.com/embed/yZaSf7h-mn8",
+        "https://www.youtube.com/embed/dnBS59kEjLo"
+      ]},
+      { inicio: 19, fin: 21, videos: [
+        "https://www.youtube.com/embed/B9YMRfBN94Q",
+        "https://www.youtube.com/embed/UZImbkaVA1k",
+        "https://www.youtube.com/embed/BK3WS2Lqb2k",
+        "https://www.youtube.com/embed/kSJa40uCctE"
+      ]},
+      { inicio: 21, fin: 22, videos: [
+        "https://www.youtube.com/embed/uu1OLcHjmQo",
+        "https://www.youtube.com/embed/Cz-aiFtjQVo"
+      ]},
       { inicio: 22, fin: 24, videos: [
-        "https://www.youtube.com/embed/mrA6bDCQ_Yo", "https://www.youtube.com/embed/Q0k37XsTtNE",
-        "https://www.youtube.com/embed/liCr-oFzilU", "https://www.youtube.com/embed/Q0k37XsTtNE",
-        "https://www.youtube.com/embed/Z8SOiyBk6QE", "https://www.youtube.com/embed/oU40etYDoLY",
-        "https://www.youtube.com/embed/PJl3kGra1J4", "https://www.youtube.com/embed/ThlvCY8sL4Q",
-      ] }
+        "https://www.youtube.com/embed/mrA6bDCQ_Yo",
+        "https://www.youtube.com/embed/Q0k37XsTtNE",
+        "https://www.youtube.com/embed/liCr-oFzilU"
+      ]}
     ];
 
     let player;
 
     function getVideoList() {
       const now = new Date();
-      const hour = now.getHours();
+      const hour = now.getHours(); // 0..23
+      // encontrar el grupo que cubra la hora actual
       const grupo = horarios.find(h => hour >= h.inicio && hour < h.fin);
       return grupo ? grupo.videos : [];
     }
 
     function getRandomVideoUrl() {
       const videos = getVideoList();
-      if (videos.length === 0) return null;
+      if (!videos || videos.length === 0) return null;
       const randomIndex = Math.floor(Math.random() * videos.length);
       return videos[randomIndex];
     }
 
     function mostrarVersiculoDelDia() {
       const versiculosPorDia = [
-        ["“Proverbios de Salomón, hijo de David, rey de Israel:para adquirir sabiduría y disciplina; para discernir palabras de inteligencia;3,para recibir la corrección que dan la prudencia, la rectitud, la justicia y la equidad;4.para infundir prudencia en los inexpertos, conocimiento y discreción en los jóvenes.5,Escuche esto el sabio y aumente su saber; reciba dirección el entendido,6.para discernir el proverbio y la parábola,  los dichos de los sabios y sus enigmas.7,El temor del Señor es el principio del conocimiento;   los necios desprecian la sabiduría y la disciplina...”\n– probervio 2:1-7", "“Jehová, no me reprendas en tu furor, ni me castigues en tu ira. 2,porque tus saetas cayeron sobre mí, y subre mi ha descendido tu mano.3,nada hay sano en mi carne, a causa de tu ira; ni hay paz en mis huesos, a causa de mi pecado.4,porque mis iniquidades se han agravado sobre mi cabeza ...”\n– Salmo 38:1-10"],
-
-        ["“Moisés ascendió de las llanuras de Moab al monte Nebo, a la cima del monte Pisgá, frente a Jericó. Allí el Señor le mostró todo el territorio que se extiende desde Galaad hasta Dan, 2 todo el territorio de Neftalí y de Efraín, Manasés y Judá, hasta el mar Mediterráneo. 3 Le mostró también la región del Néguev y la del valle de Jericó, la Ciudad de Palmeras, hasta Zoar. 4 Luego el Señor dijo: «Este es el territorio que juré a Abraham, Isaac y Jacob que daría a sus descendientes. Te he permitido verlo con tus propios ojos, pero no podrás entrar en él»5 Allí en Moab murió Moisés, siervo del Señor, tal como el Señor se lo había dicho. 6 Y lo sepultó en Moab, en el valle que está frente a Bet Peor, pero hasta la fecha nadie sabe dónde está su sepultura. 7 Moisés tenía ciento veinte años cuando murió. Con todo, no se había debilitado su vista ni había perdido su vigor. 8 Durante treinta días los israelitas lloraron a Moisés en las llanuras de Moab, guardando así el tiempo de llanto y luto por su muerte....”\n– deuteronmio 34:1-8", "“ Después de la muerte de Josué, los israelitas preguntaron al Señor: ¿Quién de nosotros será el primero en subir y pelear contra los cananeos?  El Señor respondió: Judá será el primero en subir, puesto que ya he entregado el país en sus manos. 3 Entonces los de la tribu de Judá dijeron a sus hermanos de la tribu de Simeón: «Suban con nosotros al territorio que nos ha tocado y pelearemos contra los cananeos; después nosotros iremos con ustedes al territorio que les tocó». Y los de la tribu de Simeón los acompañaron.  Cuando Judá atacó, el Señor entregó en sus manos a los cananeos y a los ferezeos. En Bézec derrotaron a diez mil hombres. 5 Allí se toparon con Adoní Bézec y pelearon contra él, y derrotaron a los cananeos y a los ferezeos. 6 Adoní Bézec logró escapar, pero lo persiguieron hasta que lo capturaron, y le cortaron los pulgares de las manos y los dedos gordos de los pies...”\n– Jueces 1:1-6"],
-
-        ["“Cuando Mardoqueo se enteró de todo lo que se había hecho, se rasgó las vestiduras, se vistió de luto, se cubrió de ceniza y salió por la ciudad dando gritos de amargura. 2 Pero, como a nadie se le permitía entrar a palacio vestido de luto, solo pudo llegar hasta la puerta del rey. 3 En cada provincia adonde llegaban el edicto y la orden del rey, había gran duelo entre los judíos, con ayuno, llanto y lamentos. Muchos de ellos, vestidos de luto, se tendían sobre la ceniza. 4 Cuando las criadas y los eunucos de la reina Ester llegaron y le contaron lo que pasaba, ella se angustió mucho y envió ropa a Mardoqueo para que se la pusiera en lugar de la ropa de luto; pero él no la aceptó. 5 Entonces Ester mandó llamar a Hatac, uno de los eunucos del rey puesto al servicio de ella, y le ordenó que averiguara qué preocupaba a Mardoqueo y por qué actuaba de esa manera. 6 Así que Hatac salió a ver a Mardoqueo, que estaba en la plaza de la ciudad, frente a la puerta del rey. 7 Mardoqueo contó todo lo que le había sucedido, mencionando incluso la cantidad exacta de dinero que Amán había prometido pagar al tesoro real por la aniquilación de los judíos. 8 También le dio una copia del texto del edicto promulgado en Susa que ordenaba el exterminio, para que se lo mostrara a Ester, se lo explicara y le ordenara que se presentara ante el rey para implorar clemencia e interceder en favor de su pueblo. 9 Hatac regresó e informó a Ester lo que Mardoqueo había dicho. 10 Entonces ella ordenó a Hatac que dijera a Mardoqueo: 11 «Todos los servidores del rey y el pueblo de las provincias del reino saben que para cualquier hombre o mujer que, sin ser invitado por el rey, se acerque a él en el patio interior, hay una sola ley: la pena de muerte. La única excepción es que el rey, extendiendo su cetro de oro, le perdone la vida. En cuanto a mí, hace ya treinta días que el rey no me ha pedido presentarme ante él». 12 Cuando Mardoqueo se enteró de lo que había dicho Ester,...”\n– ester 4:1-12", "“Un día, en el mes de nisán del año veinte del reinado de Artajerjes, al ofrecerle vino al rey, como él nunca me había visto triste, 2 me preguntó:...”\n– Salmos 37:7"],
-
-        ["“Mientras estuvo en Hebrón, David tuvo los siguientes hijos: Su primogénito fue Amnón, hijo de Ajinoán la jezrelita;  el segundo, Quileab, hijo de Abigaíl, viuda de Nabal de Carmel; el tercero, Absalón, hijo de Macá, la hija del rey Talmay de Guesur;4 el cuarto, Adonías, hijo de Jaguit; el quinto, Sefatías, hijo de Abital; 5 el sexto, Itreán, hijo de Eglá, que era otra esposa de David...”\n– 2sam. 5:2-5", "“Al tercer día se celebró una boda en Caná de Galilea y la madre de Jesús se encontraba allí. 2 También habían sido invitados a la boda Jesús y sus discípulos. 3 Cuando el vino se acabó, la madre de Jesús le dijo: Ya no tienen vino. Mujer, ¿eso qué tiene que ver conmigo? respondió Jesús—. Todavía no ha llegado mi hora. 5 Su madre dijo a los sirvientes: Hagan lo que él les ordene. 6 Había allí seis tinajas de piedra, de las que usan los judíos en sus ceremonias de purificación. En cada una cabían unos cien litros.Jesús dijo a los sirvientes: Llenen de agua las tinajas.Y los sirvientes las llenaron hasta el borde.Ahora saquen un poco y llévenlo al encargado del banquete —dijo Jesús. Así lo hicieron. 9 El encargado del banquete probó el agua convertida en vino sin saber de dónde había salido, aunque sí lo sabían los sirvientes que habían sacado el agua. Entonces llamó aparte al novio 10 y le dijo:...”\n–  juan 2:1-10"],
-
-        ["“18 El nacimiento de Jesucristo fue así: Su madre, María, estaba comprometida para casarse con José; pero, antes de unirse a él, resultó que estaba embarazada por el poder del Espíritu Santo. 19 Como José, su esposo, era un hombre justo y no quería exponerla a vergüenza pública, decidió romper en secreto el compromiso. 20 Pero cuando él estaba considerando hacerlo se le apareció en sueños un ángel del Señor y le dijo: «José, hijo de David, no temas recibir a María por esposa, porque ella ha concebido por el poder del Espíritu Santo. 21 Dará a luz un hijo y le pondrás por nombre Jesús,[d] porque él salvará a su pueblo de sus pecados». 22 Todo esto sucedió para que se cumpliera lo que el Señor había dicho por medio del profeta:23 «La virgen concebirá y dará a luz un hijo y lo llamarán Emanuel» que significa «Dios con nosotros»24 Cuando José se despertó, hizo lo que el ángel del Señor le había mandado y recibió a María por esposa. 25 Pero no tuvo relaciones conyugales con ella hasta que dio a luz un hijo, a quien le puso por nombre Jesús.....”\n– mateo 1:18-24", "“ 3 El tentador se acercó y le propuso:Si eres el Hijo de Dios, ordena a estas piedras que se conviertan en pan.4 Jesús respondió:Escrito está: No solo de pan vive el hombre, sino de toda palabra que sale de la boca de Dios 5 Luego el diablo lo llevó a la ciudad santa e hizo que se pusiera de pie sobre la parte más alta del Templo 6 y le dijo:....”\n– mateo 1:1-5"],
-
-        ["“Por lo cual estuy seguro de que ni la muerte, ni la vida, ni angeles,ni principados,ni potestades,ni lo presente ni lo por medir, ni lo alto ni lo profundo, ni ninguna otra cosa creada nos podra separar del amor de Dios, que es en cristo jesus Señor nuestro. ”\n– Romanos 8:37-38", "“Bendice, alma mía...”\n– Salmos 103:1"],
-
-        ["“Porque de tal manera amó Dios...”\n– Juan 3:16", "“Deléitate en Jehová...”\n– Salmos 37:4"]
+        ["Porque de tal manera amó Dios... – Juan 3:16", "Deléitate en Jehová... – Salmos 37:4"],
+        ["El Señor es mi pastor; nada me faltará. – Salmos 23:1", "Bendice, alma mía, al Señor. – Salmos 103:1"],
+        ["El temor del Señor es el principio de la sabiduría. – Proverbios 9:10", "Confía en el Señor con todo tu corazón. – Proverbios 3:5"],
+        ["Y conoceréis la verdad, y la verdad os hará libres. – Juan 8:32", "Amarás a tu prójimo como a ti mismo. – Mateo 22:39"],
+        ["Todo lo puedo en Cristo que me fortalece. – Filipenses 4:13", "No temas, porque yo estoy contigo. – Isaías 41:10"],
+        ["Porque yo sé los planes que tengo para vosotros. – Jeremías 29:11", "Buscad primeramente el reino de Dios. – Mateo 6:33"],
+        ["Ninguna cosa podrá separarnos del amor de Dios. – Romanos 8:38-39", "Sed siempre humildes y amables. – Efesios 4:2"]
       ];
-      const dia = new Date().getDay();
-      const versiculos = versiculosPorDia[dia];
+      const dia = new Date().getDay(); // 0 (domingo) ... 6
+      const versiculos = versiculosPorDia[dia] || versiculosPorDia[0];
       const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
-      document.getElementById("versiculoDia").textContent = versiculo;
+      const el = document.getElementById("versiculoDia");
+      if (el) el.textContent = versiculo;
     }
 
+    // API de YouTube llama a esta función cuando está lista
     function onYouTubeIframeAPIReady() {
       const videoUrl = getRandomVideoUrl();
-      if (!videoUrl) return;
+      if (!videoUrl) {
+        // no hay video para la hora actual
+        return;
+      }
       const videoId = videoUrl.split("/embed/")[1];
 
       player = new YT.Player("player", {
@@ -227,9 +186,10 @@
         },
         events: {
           onStateChange: function(event) {
+            // cuando termina, cargar otro video aleatorio del mismo bloque horario
             if (event.data === YT.PlayerState.ENDED) {
               const nextUrl = getRandomVideoUrl();
-              if (nextUrl) {
+              if (nextUrl && player && player.loadVideoById) {
                 const nextId = nextUrl.split("/embed/")[1];
                 player.loadVideoById(nextId);
               }
