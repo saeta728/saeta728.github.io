@@ -47,6 +47,14 @@
       color: #fff;
       margin: 6px 0;
     }
+
+    #playerMessage {
+      color: #fff;
+      background: rgba(0,0,0,0.25);
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -56,13 +64,14 @@
       <h2 style="text-align: center; margin: 6px 0 0 0;">Reproductor de fuego</h2>
 
       <!-- Reproductor único -->
-      <div id="player" style="margin-top: 20px;"></div>
+      <div id="player" style="margin-top: 20px; min-width: 300px; min-height: 180px;"></div>
+      <div id="playerMessage" style="margin-top: 12px; display: none;"></div>
 
       <div class="schedule" style="margin-top: 20px;">
         <h1>Muchas gracias por escuchar aviradio2, a continuación información que debe saber:</h1>
         <p>aviradio2 es una plataforma las 24/7 del año.</p>
         <h1>Horarios:</h1>
-        <h2>1-5am: música instrumental.</h2>
+        <h2>0-6am: música instrumental.</h2>
         <h2>6-10am: música cristiana, Pan del Cielo, Sid Roth y lectura bíblica.</h2>
         <h2>10am-2pm: prédica de avivamiento y Dante Gebel.</h2>
         <h2>2-5pm: música cristiana, noticias cristianas.</h2>
@@ -83,9 +92,9 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    // Horarios corregidos: cada objeto tiene inicio, fin y array de videos.
+    // Ajusté los horarios para cubrir 0..23 sin huecos
     const horarios = [
-      { inicio: 1, fin: 5, videos: [
+      { inicio: 0, fin: 6, videos: [
         "https://www.youtube.com/embed/sslrepbO5M8",
         "https://www.youtube.com/embed/Hs6WG7BUR1g",
         "https://www.youtube.com/embed/Nqo-T1nrGps",
@@ -136,7 +145,7 @@
 
     function getVideoList() {
       const now = new Date();
-      const hour = now.getHours(); // 0..23
+      let hour = now.getHours(); // 0..23
       // encontrar el grupo que cubra la hora actual
       const grupo = horarios.find(h => hour >= h.inicio && hour < h.fin);
       return grupo ? grupo.videos : [];
@@ -169,8 +178,12 @@
     // API de YouTube llama a esta función cuando está lista
     function onYouTubeIframeAPIReady() {
       const videoUrl = getRandomVideoUrl();
+      const msgEl = document.getElementById("playerMessage");
       if (!videoUrl) {
-        // no hay video para la hora actual
+        if (msgEl) {
+          msgEl.style.display = "block";
+          msgEl.textContent = "No hay videos programados para esta hora. Revisa el horario o intenta más tarde.";
+        }
         return;
       }
       const videoId = videoUrl.split("/embed/")[1];
@@ -182,9 +195,22 @@
         playerVars: {
           autoplay: 1,
           rel: 0,
-          modestbranding: 1
+          modestbranding: 1,
+          controls: 1
         },
         events: {
+          onReady: function(event) {
+            // Muchos navegadores permiten autoplay sólo si está silenciado.
+            try {
+              event.target.mute(); // mute al inicio para permitir autoplay
+              event.target.playVideo();
+            } catch (e) {
+              console.warn("No se pudo mutear/reproducir automáticamente:", e);
+            }
+            if (msgEl) {
+              msgEl.style.display = "none";
+            }
+          },
           onStateChange: function(event) {
             // cuando termina, cargar otro video aleatorio del mismo bloque horario
             if (event.data === YT.PlayerState.ENDED) {
@@ -193,6 +219,10 @@
                 const nextId = nextUrl.split("/embed/")[1];
                 player.loadVideoById(nextId);
               }
+            }
+            // si hay error, mostrar mensaje
+            if (event.data === YT.PlayerState.UNSTARTED || event.data === -1) {
+              // no hacemos nada especial aquí, pero podrías mostrar info.
             }
           }
         }
